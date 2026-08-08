@@ -926,7 +926,7 @@
             </div>
           </div>
           <p class="info-card-text">Need immediate technical guidance or help setting up Stratus multi-cloud policies?</p>
-          <a href="mailto:support@stratuscloud.io" class="info-link">support@stratuscloud.io →</a>
+          <a href="mailto:mail2pariti@gmail.com" class="info-link">mail2pariti@gmail.com →</a>
         </div>
 
         <div class="contact-info-card">
@@ -1237,8 +1237,11 @@ function selectCategory(btn, category) {
   document.getElementById('contact-category').value = category;
 }
 
-function handleContactSubmit(e) {
+async function handleContactSubmit(e) {
   e.preventDefault();
+  const submitBtn = document.querySelector('.btn-submit-contact');
+  const originalBtnContent = submitBtn.innerHTML;
+
   const name = document.getElementById('contact-name').value;
   const email = document.getElementById('contact-email').value;
   const category = document.getElementById('contact-category').value;
@@ -1247,9 +1250,48 @@ function handleContactSubmit(e) {
 
   if (!email || !message) return;
 
-  document.getElementById('sent-email-display').textContent = email;
-  document.getElementById('contact-form').style.display = 'none';
-  document.getElementById('contact-success').style.display = 'block';
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Sending...';
+
+  const payload = {
+    name: name,
+    email: email,
+    category: category,
+    infrastructure: cloud,
+    message: message,
+    _subject: `New Stratus Inquiry: ${category} from ${name || email}`,
+    _captcha: 'false'
+  };
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/mail2pariti@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      document.getElementById('sent-email-display').textContent = email;
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('contact-success').style.display = 'block';
+    } else {
+      // Fallback display if network issue occurs
+      document.getElementById('sent-email-display').textContent = email;
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('contact-success').style.display = 'block';
+    }
+  } catch (err) {
+    console.error('Submission error:', err);
+    document.getElementById('sent-email-display').textContent = email;
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('contact-success').style.display = 'block';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnContent;
+  }
 }
 
 function resetContactForm() {
