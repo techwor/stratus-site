@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stratus — AI-driven cloud operations platform</title>
-  <meta name="description" content="Self-hosted multi-cloud management. Inventory, cost visibility, lifecycle automation, and AI-driven deployment — all in your own infrastructure." />
+  <title>Stratus — Multi-Cloud Visibility &amp; Automated Lifecycle Management</title>
+  <meta name="description" content="Self-hosted multi-cloud management platform for DevOps engineers. Full cost visibility, automated stop/start schedules, and infrastructure lifecycle control." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -55,12 +55,11 @@
   <div class="container hero-inner">
     <div class="hero-badge">Open source · Self-hosted · Free</div>
     <h1 class="hero-title">
-      Your cloud.<br>
-      <span class="gradient-text">Managed by AI.</span>
+      Cost visibility &amp; automated control.<br>
+      <span class="gradient-text">Built for DevOps engineers.</span>
     </h1>
     <p class="hero-sub">
-      Stratus is a self-hosted platform that gives you full visibility and control over your AWS, Azure, and GCP infrastructure —
-      with an AI agent that manages resource lifecycles, deploys apps, and ships code changes automatically.
+      Stratus gives DevOps teams complete cost visibility and automated schedule policies over AWS, Azure, and GCP infrastructure — stopping idle waste and streamlining resource lifecycles automatically.
     </p>
     <div class="hero-ctas">
       <a href="https://github.com/techwor/stratus-cloud-management.git" class="btn-primary" target="_blank" rel="noopener">
@@ -335,7 +334,7 @@
               <th>Stop</th>
               <th>Start</th>
               <th>Schedule</th>
-              <th>Config capture (AI)</th>
+              <th>Config capture</th>
             </tr>
           </thead>
           <tbody>
@@ -476,7 +475,7 @@
           <tr><td>Multi-cloud (AWS + Azure + GCP)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
           <tr><td>Cost visibility across accounts</td><td class="yes">✓</td><td class="partial">Partial</td><td class="no">✗</td><td class="partial">Partial</td></tr>
           <tr><td>Cost shown before deployment</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
-          <tr><td>AI lifecycle agent (EKS/RDS delete+recreate)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Automated lifecycle agent (EKS/RDS delete+recreate)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
           <tr><td>Drift detection</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">AWS Config (complex)</td></tr>
           <tr><td>Self-hosted / open source</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">N/A</td></tr>
           <tr><td>Pricing</td><td class="yes">Free</td><td class="no">$499+/mo</td><td class="no">$85+/mo</td><td class="partial">AWS charges apply</td></tr>
@@ -502,7 +501,7 @@
           <span class="plan-eta">Live</span>
         </div>
         <h3 class="plan-card-title">⚡ Lifecycle Agent</h3>
-        <p class="plan-card-desc">AI-driven state capture, safe resource deletion &amp; on-demand recreation.</p>
+        <p class="plan-card-desc">Automated state capture, safe resource deletion &amp; on-demand recreation.</p>
         <div class="plan-card-foot">
           <span class="plan-highlight">Save up to 100% idle cost</span>
         </div>
@@ -513,7 +512,7 @@
           <span class="plan-badge">Deployment</span>
           <span class="plan-eta">Live</span>
         </div>
-        <h3 class="plan-card-title">🚀 AI Deployment</h3>
+        <h3 class="plan-card-title">🚀 Smart Deployment</h3>
         <p class="plan-card-desc">Repo URL stack detection &amp; multi-cloud cost matrix comparison.</p>
         <div class="plan-card-foot">
           <span class="plan-highlight">Pre-deploy cost visibility</span>
@@ -594,7 +593,7 @@
             <div class="demo-stat-card">
               <div class="dsc-label">Projected Net Monthly Savings</div>
               <div class="dsc-value" id="p1-saving-val">$183<span class="dsc-unit">/mo</span></div>
-              <div class="dsc-sub" id="p1-saving-sub">AI configuration state ready for deletion</div>
+              <div class="dsc-sub" id="p1-saving-sub">Configuration state ready for deletion</div>
             </div>
           </div>
 
@@ -605,8 +604,8 @@
             </div>
             <div class="terminal-body" id="p1-terminal">
               <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent plan --resource dev-cluster-us-east-1</span></div>
-              <div class="term-row"><span class="term-dim">[AI Agent]</span> Scanning Kubernetes CRDs, NodeGroups, VPC references...</div>
-              <div class="term-row"><span class="term-dim">[AI Agent]</span> State serialized to <span class="term-val">eks-dev-config.yaml</span> (142 KB)</div>
+              <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Scanning Kubernetes CRDs, NodeGroups, VPC references...</div>
+              <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> State serialized to <span class="term-val">eks-dev-config.yaml</span> (142 KB)</div>
               <div class="term-row"><span class="term-output term-green">✓ Ready to delete cluster safely. Click "Capture Config &amp; Stop" above.</span></div>
             </div>
           </div>
@@ -638,7 +637,7 @@
             </div>
 
             <div class="demo-info-banner" id="p2-info-banner">
-              💡 <strong>AI Recommendation:</strong> Deploy to <strong>ECS Fargate</strong> for optimal cost efficiency.
+              💡 <strong>Smart Recommendation:</strong> Deploy to <strong>ECS Fargate</strong> for optimal cost efficiency.
             </div>
           </div>
 
@@ -975,7 +974,7 @@ function setMode(el, mode) {
 /* ── INTERACTIVE FEATURE EXPLORER LOGIC ── */
 const planData = {
   plan1: { tag: "Lifecycle Agent", title: "Infrastructure Lifecycle Agent", status: "Live Feature" },
-  plan2: { tag: "AI Deployment", title: "AI Deployment Agent", status: "Live Feature" },
+  plan2: { tag: "Smart Deployment", title: "Automated Deployment Engine", status: "Live Feature" },
   plan3: { tag: "CI/CD Layer", title: "CI/CD Integration Layer", status: "Live Feature" },
   plan5: { tag: "FinOps Advisor", title: "FinOps RI & Savings Advisor", status: "Live Feature" },
   plan6: { tag: "Drift Detection", title: "Infrastructure Drift Detection", status: "Live Feature" }
@@ -1012,11 +1011,11 @@ function updateP1Resource() {
   const term = document.getElementById('p1-terminal');
   term.innerHTML = `
     <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent plan --resource ${item.name}</span></div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> Scanning Kubernetes CRDs, NodeGroups, VPC references...</div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> State serialized to <span class="term-val">${item.config}</span></div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Scanning Kubernetes CRDs, NodeGroups, VPC references...</div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> State serialized to <span class="term-val">${item.config}</span></div>
     <div class="term-row"><span class="term-output term-green">✓ Ready to delete cluster safely. Click "Capture Config &amp; Stop" above.</span></div>
   `;
-  document.getElementById('p1-saving-sub').textContent = 'AI configuration state ready for deletion';
+  document.getElementById('p1-saving-sub').textContent = 'Configuration state ready for deletion';
 }
 
 function runP1Stop() {
@@ -1025,9 +1024,9 @@ function runP1Stop() {
   const term = document.getElementById('p1-terminal');
   term.innerHTML = `
     <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent stop ${item.name} --approve</span></div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> Serializing full state to encrypted vault...</div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> Initiating graceful shutdown sequence...</div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> Deleting compute resources...</div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Serializing full state to encrypted vault...</div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Initiating graceful shutdown sequence...</div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Deleting compute resources...</div>
     <div class="term-row"><span class="term-output term-green">✓ ${item.name} stopped successfully! Net saving: ${item.cost}/mo. Config stored for instant recreate.</span></div>
   `;
   document.getElementById('p1-saving-sub').textContent = 'Resource stopped · 100% savings active';
@@ -1039,8 +1038,8 @@ function runP1Restore() {
   const term = document.getElementById('p1-terminal');
   term.innerHTML = `
     <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent recreate ${item.name}</span></div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> Reading state from vault (${item.config})...</div>
-    <div class="term-row"><span class="term-dim">[AI Agent]</span> Provisioning stack matching exact previous state...</div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Reading state from vault (${item.config})...</div>
+    <div class="term-row"><span class="term-dim">[Lifecycle Agent]</span> Provisioning stack matching exact previous state...</div>
     <div class="term-row"><span class="term-output term-green">✓ ${item.name} recreated and healthy! Endpoint online.</span></div>
   `;
   document.getElementById('p1-saving-sub').textContent = 'Resource online and running';
@@ -1059,11 +1058,11 @@ function updateP2Repo() {
   const repo = document.getElementById('p2-repo-select').value;
   const banner = document.getElementById('p2-info-banner');
   if (repo === 'auth-api') {
-    banner.innerHTML = `💡 <strong>AI Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>ECS Fargate / Container Apps</strong> for low overhead.`;
+    banner.innerHTML = `💡 <strong>Smart Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>ECS Fargate / Container Apps</strong> for low overhead.`;
   } else if (repo === 'frontend-app') {
-    banner.innerHTML = `💡 <strong>AI Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>Serverless SSR Container</strong> for automatic scaling.`;
+    banner.innerHTML = `💡 <strong>Smart Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>Serverless SSR Container</strong> for automatic scaling.`;
   } else {
-    banner.innerHTML = `💡 <strong>AI Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>Worker Node / Batch Job</strong> to minimize runtime idle.`;
+    banner.innerHTML = `💡 <strong>Smart Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>Worker Node / Batch Job</strong> to minimize runtime idle.`;
   }
 }
 
