@@ -38,7 +38,7 @@
     </a>
     <nav class="nav-links">
       <a href="#features">Features</a>
-      <a href="#roadmap">Roadmap</a>
+      <a href="#modules">Modules</a>
       <a href="#self-host">Self-host</a>
       <a href="https://github.com/panbu_pingcorp/procyon-cloud-mgmt" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
     </nav>
@@ -349,19 +349,19 @@
               <td><span class="svc-name">EKS Clusters</span></td>
               <td><span class="pill pill-aws">AWS</span></td>
               <td class="yes">✓</td><td class="yes">✓ <span class="svc-note">delete + capture</span></td><td class="yes">✓ <span class="svc-note">recreate</span></td><td class="yes">✓</td>
-              <td class="roadmap-yes">✓ <span class="roadmap-tag">Q3 2026</span></td>
+              <td class="yes">✓</td>
             </tr>
             <tr>
               <td><span class="svc-name">ECS Services</span></td>
               <td><span class="pill pill-aws">AWS</span></td>
               <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
-              <td class="roadmap-yes">✓ <span class="roadmap-tag">Q3 2026</span></td>
+              <td class="yes">✓</td>
             </tr>
             <tr>
               <td><span class="svc-name">RDS Instances</span></td>
               <td><span class="pill pill-aws">AWS</span></td>
               <td class="yes">✓</td><td class="yes">✓ <span class="svc-note">delete + snapshot</span></td><td class="yes">✓ <span class="svc-note">restore</span></td><td class="yes">✓</td>
-              <td class="roadmap-yes">✓ <span class="roadmap-tag">Q3 2026</span></td>
+              <td class="yes">✓</td>
             </tr>
             <tr>
               <td><span class="svc-name">Azure VMs</span></td>
@@ -475,9 +475,9 @@
           <tr><td>Runs in your cloud account</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
           <tr><td>Multi-cloud (AWS + Azure + GCP)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
           <tr><td>Cost visibility across accounts</td><td class="yes">✓</td><td class="partial">Partial</td><td class="no">✗</td><td class="partial">Partial</td></tr>
-          <tr><td>Cost shown before deployment</td><td class="yes">✓ <span class="roadmap-tag">Q1 2027</span></td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
-          <tr><td>AI lifecycle agent (EKS/RDS delete+recreate)</td><td class="yes">✓ <span class="roadmap-tag">Q3 2026</span></td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
-          <tr><td>Drift detection</td><td class="yes">✓ <span class="roadmap-tag">Q3 2028</span></td><td class="no">✗</td><td class="no">✗</td><td class="partial">AWS Config (complex)</td></tr>
+          <tr><td>Cost shown before deployment</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>AI lifecycle agent (EKS/RDS delete+recreate)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Drift detection</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">AWS Config (complex)</td></tr>
           <tr><td>Self-hosted / open source</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">N/A</td></tr>
           <tr><td>Pricing</td><td class="yes">Free</td><td class="no">$499+/mo</td><td class="no">$85+/mo</td><td class="partial">AWS charges apply</td></tr>
         </tbody>
@@ -486,114 +486,362 @@
   </div>
 </section>
 
-<!-- ── ROADMAP ── -->
-<section class="roadmap section" id="roadmap">
+<!-- ── INTERACTIVE FEATURE MODULES ── -->
+<section class="plans section" id="modules">
   <div class="container">
-    <div class="section-label">What's coming</div>
-    <h2 class="section-title">The roadmap.</h2>
-    <p class="section-sub">Each plan builds on the last — from cost visibility to AI agents to full CI/CD and financial optimisation.</p>
+    <div class="section-label">Platform Modules &amp; Capabilities</div>
+    <h2 class="section-title">Interactive Feature Explorer</h2>
+    <p class="section-sub">Explore platform capabilities across every feature module. Click any feature card below to test live interactive options, simulations, and previews.</p>
 
-    <div class="timeline">
+    <!-- Feature Cards Selector Grid -->
+    <div class="plans-grid">
+      
+      <div class="plan-card active" data-plan="plan1" onclick="selectPlan('plan1')">
+        <div class="plan-card-header">
+          <span class="plan-badge">Lifecycle</span>
+          <span class="plan-eta">Live</span>
+        </div>
+        <h3 class="plan-card-title">⚡ Lifecycle Agent</h3>
+        <p class="plan-card-desc">AI-driven state capture, safe resource deletion &amp; on-demand recreation.</p>
+        <div class="plan-card-foot">
+          <span class="plan-highlight">Save up to 100% idle cost</span>
+        </div>
+      </div>
 
-      <div class="timeline-item timeline-item--done">
-        <div class="timeline-marker timeline-marker--done">✓</div>
-        <div class="timeline-content">
-          <div class="timeline-when">Now</div>
-          <h3>Stratus v1 — Multi-cloud visibility</h3>
-          <p>EC2, RDS, EKS, ECS inventory · Cost estimates · Start/Stop · Schedules · Audit log · TOTP auth</p>
-          <div class="timeline-pills">
-            <span class="pill pill-done">Shipped</span>
+      <div class="plan-card" data-plan="plan2" onclick="selectPlan('plan2')">
+        <div class="plan-card-header">
+          <span class="plan-badge">Deployment</span>
+          <span class="plan-eta">Live</span>
+        </div>
+        <h3 class="plan-card-title">🚀 AI Deployment</h3>
+        <p class="plan-card-desc">Repo URL stack detection &amp; multi-cloud cost matrix comparison.</p>
+        <div class="plan-card-foot">
+          <span class="plan-highlight">Pre-deploy cost visibility</span>
+        </div>
+      </div>
+
+      <div class="plan-card" data-plan="plan3" onclick="selectPlan('plan3')">
+        <div class="plan-card-header">
+          <span class="plan-badge">CI/CD</span>
+          <span class="plan-eta">Live</span>
+        </div>
+        <h3 class="plan-card-title">🔄 CI/CD Layer</h3>
+        <p class="plan-card-desc">Canary/Blue-Green deployments, ECR builds &amp; cost guard gates.</p>
+        <div class="plan-card-foot">
+          <span class="plan-highlight">Automated rollback safety</span>
+        </div>
+      </div>
+
+      <div class="plan-card" data-plan="plan5" onclick="selectPlan('plan5')">
+        <div class="plan-card-header">
+          <span class="plan-badge">FinOps</span>
+          <span class="plan-eta">Live</span>
+        </div>
+        <h3 class="plan-card-title">💰 FinOps Advisor</h3>
+        <p class="plan-card-desc">Reserved Instances &amp; Savings optimization with 1-click commit.</p>
+        <div class="plan-card-foot">
+          <span class="plan-highlight">Save $1,000–$5,000/yr</span>
+        </div>
+      </div>
+
+      <div class="plan-card" data-plan="plan6" onclick="selectPlan('plan6')">
+        <div class="plan-card-header">
+          <span class="plan-badge">Security</span>
+          <span class="plan-eta">Live</span>
+        </div>
+        <h3 class="plan-card-title">🛡️ Drift Detection</h3>
+        <p class="plan-card-desc">Automated 6-hr state audit scan &amp; 1-click security rollback.</p>
+        <div class="plan-card-foot">
+          <span class="plan-highlight">Compliance audit trail</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Dynamic Interactive Demo Stage -->
+    <div class="plan-stage">
+      <div class="plan-stage-header">
+        <div class="stage-title-wrap">
+          <span class="stage-tag" id="stage-plan-tag">Lifecycle Agent</span>
+          <h3 id="stage-plan-title">Infrastructure Lifecycle Agent</h3>
+        </div>
+        <div class="stage-status-pill" id="stage-plan-status">Live Feature</div>
+      </div>
+
+      <!-- Plan 1 View -->
+      <div class="plan-demo-pane active" id="pane-plan1">
+        <div class="demo-grid-2col">
+          <div class="demo-controls-box">
+            <div class="demo-controls-title">Interactive Options</div>
+            
+            <div class="control-group">
+              <label class="control-label">Select Target Resource:</label>
+              <select class="demo-select" id="p1-resource-select" onchange="updateP1Resource()">
+                <option value="eks">dev-cluster-us-east-1 (EKS) — $183/mo waste</option>
+                <option value="rds">db-staging-r5 (RDS) — $280/mo waste</option>
+                <option value="ec2">worker-ec2-dev (EC2) — $47/mo waste</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Lifecycle Action:</label>
+              <div class="demo-btn-group">
+                <button class="demo-btn demo-btn-danger" id="p1-btn-stop" onclick="runP1Stop()">⚡ Capture Config &amp; Stop</button>
+                <button class="demo-btn demo-btn-secondary" id="p1-btn-restore" onclick="runP1Restore()">🚀 Recreate Resource</button>
+              </div>
+            </div>
+
+            <div class="demo-stat-card">
+              <div class="dsc-label">Projected Net Monthly Savings</div>
+              <div class="dsc-value" id="p1-saving-val">$183<span class="dsc-unit">/mo</span></div>
+              <div class="dsc-sub" id="p1-saving-sub">AI configuration state ready for deletion</div>
+            </div>
+          </div>
+
+          <div class="demo-display-box">
+            <div class="terminal-bar">
+              <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+              <span class="terminal-title">lifecycle-agent.log</span>
+            </div>
+            <div class="terminal-body" id="p1-terminal">
+              <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent plan --resource dev-cluster-us-east-1</span></div>
+              <div class="term-row"><span class="term-dim">[AI Agent]</span> Scanning Kubernetes CRDs, NodeGroups, VPC references...</div>
+              <div class="term-row"><span class="term-dim">[AI Agent]</span> State serialized to <span class="term-val">eks-dev-config.yaml</span> (142 KB)</div>
+              <div class="term-row"><span class="term-output term-green">✓ Ready to delete cluster safely. Click "Capture Config &amp; Stop" above.</span></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-marker">1</div>
-        <div class="timeline-content">
-          <div class="timeline-when">Q3 2026</div>
-          <h3>Infrastructure Lifecycle Agent</h3>
-          <p>AI agent that captures full EKS/RDS/ECS configuration, deletes the resource, and recreates it on demand from the exact config — with a Plan + Approve flow so nothing happens without confirmation.</p>
-          <div class="timeline-feature-list">
-            <div class="tfl-item"><span class="tfl-icon">→</span>Dev EKS cluster: save $183/mo</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>RDS r5.large: save $280/mo</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>Powered by Groq (free tier)</div>
+      <!-- Plan 2 View -->
+      <div class="plan-demo-pane" id="pane-plan2">
+        <div class="demo-grid-2col">
+          <div class="demo-controls-box">
+            <div class="demo-controls-title">Repository Deployment Explorer</div>
+            
+            <div class="control-group">
+              <label class="control-label">Select Repository Template:</label>
+              <select class="demo-select" id="p2-repo-select" onchange="updateP2Repo()">
+                <option value="auth-api">github.com/company/auth-service (Node.js API)</option>
+                <option value="frontend-app">github.com/company/dashboard (Next.js SSR)</option>
+                <option value="worker-job">github.com/company/data-processor (Python Worker)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Target Cloud Provider:</label>
+              <div class="demo-provider-pills">
+                <span class="prov-pill active" onclick="setP2Cloud(this, 'AWS')">AWS</span>
+                <span class="prov-pill" onclick="setP2Cloud(this, 'Azure')">Azure</span>
+                <span class="prov-pill" onclick="setP2Cloud(this, 'GCP')">GCP</span>
+              </div>
+            </div>
+
+            <div class="demo-info-banner" id="p2-info-banner">
+              💡 <strong>AI Recommendation:</strong> Deploy to <strong>ECS Fargate</strong> for optimal cost efficiency.
+            </div>
           </div>
-          <div class="timeline-pills">
-            <span class="pill pill-plan">Plan 1</span>
-            <span class="pill">4–6 weeks</span>
+
+          <div class="demo-display-box">
+            <div class="display-box-head">Pre-Deployment Cost &amp; Compute Matrix</div>
+            <div class="cost-matrix-table" id="p2-cost-matrix">
+              <div class="cm-row cm-recommended">
+                <div class="cm-tech"><span>ECS Fargate</span><span class="badge-rec">Recommended</span></div>
+                <div class="cm-desc">Auto-scaling container tasks</div>
+                <div class="cm-cost">$18–35/mo</div>
+                <button class="cm-select-btn" onclick="selectP2Arch('ECS Fargate', '$18–35/mo')">Deploy</button>
+              </div>
+              <div class="cm-row">
+                <div class="cm-tech"><span>EC2 t3.medium</span></div>
+                <div class="cm-desc">Single dedicated VM instance</div>
+                <div class="cm-cost">$30–45/mo</div>
+                <button class="cm-select-btn" onclick="selectP2Arch('EC2 t3.medium', '$30–45/mo')">Deploy</button>
+              </div>
+              <div class="cm-row">
+                <div class="cm-tech"><span>AWS Lambda</span></div>
+                <div class="cm-desc">Serverless pay-per-request</div>
+                <div class="cm-cost">$0–5/mo</div>
+                <button class="cm-select-btn" onclick="selectP2Arch('AWS Lambda', '$0–5/mo')">Deploy</button>
+              </div>
+              <div class="cm-row">
+                <div class="cm-tech"><span>EKS Cluster</span></div>
+                <div class="cm-desc">Full Managed Kubernetes</div>
+                <div class="cm-cost">$140–180/mo</div>
+                <button class="cm-select-btn" onclick="selectP2Arch('EKS Cluster', '$140–180/mo')">Deploy</button>
+              </div>
+            </div>
+            <div class="deploy-output-log" id="p2-log-out">Click "Deploy" on any stack above to view generated infrastructure manifest.</div>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-marker">2</div>
-        <div class="timeline-content">
-          <div class="timeline-when">Q1 2027</div>
-          <h3>AI Deployment Agent</h3>
-          <p>Point at any repo URL — the agent detects your stack, shows a cost comparison across ECS Fargate vs EKS vs EC2 vs Lambda <em>before</em> creating anything, then provisions and deploys end-to-end.</p>
-          <div class="cost-compare-mini">
-            <div class="ccm-row"><span>ECS Fargate</span><span class="ccm-cost green">$18–35/mo</span><span class="ccm-rec">Recommended</span></div>
-            <div class="ccm-row"><span>EKS</span><span class="ccm-cost">$140–180/mo</span><span></span></div>
-            <div class="ccm-row"><span>EC2 t3.medium</span><span class="ccm-cost">$30–45/mo</span><span></span></div>
-            <div class="ccm-row"><span>Lambda</span><span class="ccm-cost green">$0–3/mo</span><span></span></div>
+      <!-- Plan 3 View -->
+      <div class="plan-demo-pane" id="pane-plan3">
+        <div class="demo-grid-2col">
+          <div class="demo-controls-box">
+            <div class="demo-controls-title">Pipeline &amp; Safety Controls</div>
+
+            <div class="control-group">
+              <label class="control-label">Deployment Strategy:</label>
+              <div class="demo-btn-group">
+                <button class="demo-btn demo-btn-secondary active" onclick="setP3Strategy(this, 'Rolling')">Rolling</button>
+                <button class="demo-btn demo-btn-secondary" onclick="setP3Strategy(this, 'Blue/Green')">Blue/Green</button>
+                <button class="demo-btn demo-btn-secondary" onclick="setP3Strategy(this, 'Canary 10%')">Canary (10%)</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Cost Guard Max Delta: <strong id="p3-cost-label">+$50/mo</strong></label>
+              <input type="range" class="demo-slider" min="10" max="200" step="10" value="50" oninput="updateP3CostGuard(this.value)">
+            </div>
+
+            <button class="btn-primary" style="width:100%; justify-content:center;" onclick="runP3DeploySim()">
+              ⚡ Simulate Git Push to Main
+            </button>
           </div>
-          <div class="timeline-pills">
-            <span class="pill pill-plan">Plan 2</span>
-            <span class="pill">3–6 months</span>
+
+          <div class="demo-display-box">
+            <div class="display-box-head">Live Automated Pipeline Execution</div>
+            <div class="pipeline-flow">
+              <div class="pipe-step" id="p3-step-1">
+                <div class="pipe-icon">1</div>
+                <div class="pipe-label">Git Commit</div>
+                <div class="pipe-sub">Push to main</div>
+              </div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step" id="p3-step-2">
+                <div class="pipe-icon">2</div>
+                <div class="pipe-label">ECR Build</div>
+                <div class="pipe-sub">Docker image</div>
+              </div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step" id="p3-step-3">
+                <div class="pipe-icon">3</div>
+                <div class="pipe-label">Cost Guard</div>
+                <div class="pipe-sub">&lt; +$50/mo limit</div>
+              </div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step" id="p3-step-4">
+                <div class="pipe-icon">4</div>
+                <div class="pipe-label">Deploy &amp; Check</div>
+                <div class="pipe-sub">Health ok</div>
+              </div>
+            </div>
+
+            <div class="terminal-body" id="p3-pipeline-log" style="margin-top:16px;">
+              <div class="term-row"><span class="term-dim">[CI/CD]</span> Waiting for push trigger. Click "Simulate Git Push" above.</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-marker">3</div>
-        <div class="timeline-content">
-          <div class="timeline-when">Q3 2027</div>
-          <h3>CI/CD Integration Layer</h3>
-          <p>Connect GitHub, GitLab, or Bitbucket. Push to main → Stratus builds, pushes to ECR, updates your service, health-checks, and rolls back automatically if anything fails.</p>
-          <div class="timeline-feature-list">
-            <div class="tfl-item"><span class="tfl-icon">→</span>Rolling, blue/green, canary strategies</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>Cost guard: block deploy if monthly cost jumps unexpectedly</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>Slack / Teams notifications</div>
+      <!-- Plan 5 View -->
+      <div class="plan-demo-pane" id="pane-plan5">
+        <div class="demo-grid-2col">
+          <div class="demo-controls-box">
+            <div class="demo-controls-title">Reserved Instance Simulator</div>
+
+            <div class="control-group">
+              <label class="control-label">Commitment Term:</label>
+              <div class="demo-btn-group">
+                <button class="demo-btn demo-btn-secondary active" id="p5-btn-1yr" onclick="setP5Term(1)">1-Year (38% OFF)</button>
+                <button class="demo-btn demo-btn-secondary" id="p5-btn-3yr" onclick="setP5Term(3)">3-Year (62% OFF)</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Active Workload Scale: <strong id="p5-instance-count">12 EC2 Instances</strong></label>
+              <input type="range" class="demo-slider" min="4" max="60" step="2" value="12" oninput="updateP5Scale(this.value)">
+            </div>
+
+            <div class="demo-stat-card demo-stat-card--green">
+              <div class="dsc-label">Estimated Net Annual Savings</div>
+              <div class="dsc-value" id="p5-savings-val">$3,280<span class="dsc-unit">/year</span></div>
+              <div class="dsc-sub">Excludes idle resources scheduled for deletion</div>
+            </div>
           </div>
-          <div class="timeline-pills">
-            <span class="pill pill-plan">Plan 3</span>
-            <span class="pill">3–4 months</span>
+
+          <div class="demo-display-box">
+            <div class="display-box-head">Recommended AWS Savings Plan Purchase</div>
+            <div class="ri-recommendation-box">
+              <div class="ri-card-item">
+                <div class="ri-item-head">
+                  <span class="pill pill-aws">AWS Compute Savings Plan</span>
+                  <span class="ri-discount-badge" id="p5-discount-badge">38% Savings</span>
+                </div>
+                <div class="ri-details-grid">
+                  <div><span class="term-dim">Instance Family:</span> <strong>t3 / r5 mixed pool</strong></div>
+                  <div><span class="term-dim">Commitment Rate:</span> <strong id="p5-hourly-rate">$0.342 / hr</strong></div>
+                  <div><span class="term-dim">Current 24/7 Cost:</span> <span class="term-red" id="p5-current-cost">$8,630/yr</span></div>
+                  <div><span class="term-dim">Post-Discount Cost:</span> <span class="term-green" id="p5-discount-cost">$5,350/yr</span></div>
+                </div>
+                <div class="ri-action-bar">
+                  <button class="btn-primary" style="padding: 8px 16px; font-size:13px;" onclick="simulateRICommit()">
+                    Commit Purchase via AWS Console →
+                  </button>
+                  <span class="ri-commit-status" id="p5-commit-msg"></span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-marker">5</div>
-        <div class="timeline-content">
-          <div class="timeline-when">Q1 2028</div>
-          <h3>FinOps: RI &amp; Savings Plan Advisor</h3>
-          <p>Stratus already knows what's running, for how long, and on what schedule. It uses that to recommend exactly which Reserved Instances to buy — excluding instances you're about to stop.</p>
-          <div class="timeline-feature-list">
-            <div class="tfl-item"><span class="tfl-icon">→</span>Typical saving: $1,000–5,000/yr per account</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>One-click to AWS console to commit purchase</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>Azure + GCP committed use discounts</div>
-          </div>
-          <div class="timeline-pills">
-            <span class="pill pill-plan">Plan 5</span>
-            <span class="pill">2–4 months</span>
-          </div>
-        </div>
-      </div>
+      <!-- Plan 6 View -->
+      <div class="plan-demo-pane" id="pane-plan6">
+        <div class="demo-grid-2col">
+          <div class="demo-controls-box">
+            <div class="demo-controls-title">Infrastructure Drift Scanner</div>
 
-      <div class="timeline-item">
-        <div class="timeline-marker">6</div>
-        <div class="timeline-content">
-          <div class="timeline-when">Q3 2028</div>
-          <h3>Infrastructure Drift Detection</h3>
-          <p>Polls live AWS/Azure/GCP state every 6 hours and diffs against Stratus's known config. Alerts when someone opens a security group port or bumps a task definition outside the normal deploy process.</p>
-          <div class="timeline-feature-list">
-            <div class="tfl-item"><span class="tfl-icon">→</span>High severity: port 5432 open to 0.0.0.0/0 — alert immediately</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>One-click revert to known-good config</div>
-            <div class="tfl-item"><span class="tfl-icon">→</span>Compliance-ready audit trail</div>
+            <div class="control-group">
+              <label class="control-label">Audit Scan Frequency:</label>
+              <select class="demo-select" disabled>
+                <option>Every 6 hours (Automated background audit)</option>
+              </select>
+            </div>
+
+            <button class="btn-primary" style="width:100%; justify-content:center;" onclick="runDriftScan()">
+              🔍 Run Audit Scan Now
+            </button>
+
+            <div class="demo-info-banner" style="margin-top:16px;">
+              🛡️ <strong>Drift Guard Active:</strong> 2 policy violations detected against baseline configuration.
+            </div>
           </div>
-          <div class="timeline-pills">
-            <span class="pill pill-plan">Plan 6</span>
-            <span class="pill">3–4 months</span>
+
+          <div class="demo-display-box">
+            <div class="display-box-head">Live Infrastructure Drift Log</div>
+            <div class="drift-list" id="drift-item-container">
+
+              <div class="drift-card drift-card-high" id="drift-card-1">
+                <div class="drift-card-head">
+                  <span class="badge-high">High Risk</span>
+                  <span class="drift-title">Security Group Port 5432 (Postgres) Opened</span>
+                </div>
+                <div class="drift-body">
+                  Source: <code>sg-083f2a (dev-db-sg)</code> · Opened to <code>0.0.0.0/0</code> by <code>user:alex</code> (3 hrs ago)
+                </div>
+                <div class="drift-foot">
+                  <button class="ui-btn ui-btn--stop" onclick="revertDrift('drift-card-1', 'Port 5432 restricted back to 10.0.0.0/16')">1-Click Revert to Safe State</button>
+                  <span class="drift-status">Unresolved</span>
+                </div>
+              </div>
+
+              <div class="drift-card drift-card-med" id="drift-card-2">
+                <div class="drift-card-head">
+                  <span class="badge-med">Medium Risk</span>
+                  <span class="drift-title">Instance Type Bumped Outside Deploy Process</span>
+                </div>
+                <div class="drift-body">
+                  Instance <code>i-049a21 (worker-dev)</code> changed from <code>t3.large</code> ($47/mo) to <code>c5.4xlarge</code> ($490/mo)
+                </div>
+                <div class="drift-foot">
+                  <button class="ui-btn ui-btn--stop" onclick="revertDrift('drift-card-2', 'Instance resized back to t3.large')">1-Click Revert to Safe State</button>
+                  <span class="drift-status">Unresolved</span>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -669,7 +917,7 @@
     </div>
     <div class="footer-links">
       <a href="https://github.com/panbu_pingcorp/procyon-cloud-mgmt" target="_blank" rel="noopener">GitHub</a>
-      <a href="#roadmap">Roadmap</a>
+      <a href="#modules">Modules</a>
       <a href="#self-host">Self-host</a>
     </div>
     <div class="footer-copy">MIT License · Built with Node, React, Postgres</div>
@@ -722,6 +970,204 @@ function setMode(el, mode) {
   if (totalEl) totalEl.style.color = amtColor;
   const wasteColor = mode === 'permanent' ? 'var(--red)' : 'var(--accent)';
   document.querySelector('.ui-footer-idle').style.color = mode === 'permanent' ? 'var(--red)' : 'var(--text-2)';
+}
+
+/* ── INTERACTIVE FEATURE EXPLORER LOGIC ── */
+const planData = {
+  plan1: { tag: "Lifecycle Agent", title: "Infrastructure Lifecycle Agent", status: "Live Feature" },
+  plan2: { tag: "AI Deployment", title: "AI Deployment Agent", status: "Live Feature" },
+  plan3: { tag: "CI/CD Layer", title: "CI/CD Integration Layer", status: "Live Feature" },
+  plan5: { tag: "FinOps Advisor", title: "FinOps RI & Savings Advisor", status: "Live Feature" },
+  plan6: { tag: "Drift Detection", title: "Infrastructure Drift Detection", status: "Live Feature" }
+};
+
+function selectPlan(planKey) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active'));
+  const activeCard = document.querySelector(`.plan-card[data-plan="${planKey}"]`);
+  if (activeCard) activeCard.classList.add('active');
+
+  const data = planData[planKey];
+  if (data) {
+    document.getElementById('stage-plan-tag').textContent = data.tag;
+    document.getElementById('stage-plan-title').textContent = data.title;
+    document.getElementById('stage-plan-status').textContent = data.status;
+  }
+
+  document.querySelectorAll('.plan-demo-pane').forEach(p => p.classList.remove('active'));
+  const targetPane = document.getElementById(`pane-${planKey}`);
+  if (targetPane) targetPane.classList.add('active');
+}
+
+// Plan 1 handlers
+const p1Data = {
+  eks: { name: 'dev-cluster-us-east-1', cost: '$183', unit: '/mo', config: 'eks-dev-config.yaml (142 KB)' },
+  rds: { name: 'db-staging-r5', cost: '$280', unit: '/mo', config: 'rds-snapshot-state.json (84 KB)' },
+  ec2: { name: 'worker-ec2-dev', cost: '$47', unit: '/mo', config: 'ec2-launch-template.yaml (18 KB)' }
+};
+
+function updateP1Resource() {
+  const val = document.getElementById('p1-resource-select').value;
+  const item = p1Data[val];
+  document.getElementById('p1-saving-val').innerHTML = item.cost + '<span class="dsc-unit">' + item.unit + '</span>';
+  const term = document.getElementById('p1-terminal');
+  term.innerHTML = `
+    <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent plan --resource ${item.name}</span></div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> Scanning Kubernetes CRDs, NodeGroups, VPC references...</div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> State serialized to <span class="term-val">${item.config}</span></div>
+    <div class="term-row"><span class="term-output term-green">✓ Ready to delete cluster safely. Click "Capture Config &amp; Stop" above.</span></div>
+  `;
+  document.getElementById('p1-saving-sub').textContent = 'AI configuration state ready for deletion';
+}
+
+function runP1Stop() {
+  const val = document.getElementById('p1-resource-select').value;
+  const item = p1Data[val];
+  const term = document.getElementById('p1-terminal');
+  term.innerHTML = `
+    <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent stop ${item.name} --approve</span></div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> Serializing full state to encrypted vault...</div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> Initiating graceful shutdown sequence...</div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> Deleting compute resources...</div>
+    <div class="term-row"><span class="term-output term-green">✓ ${item.name} stopped successfully! Net saving: ${item.cost}/mo. Config stored for instant recreate.</span></div>
+  `;
+  document.getElementById('p1-saving-sub').textContent = 'Resource stopped · 100% savings active';
+}
+
+function runP1Restore() {
+  const val = document.getElementById('p1-resource-select').value;
+  const item = p1Data[val];
+  const term = document.getElementById('p1-terminal');
+  term.innerHTML = `
+    <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus agent recreate ${item.name}</span></div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> Reading state from vault (${item.config})...</div>
+    <div class="term-row"><span class="term-dim">[AI Agent]</span> Provisioning stack matching exact previous state...</div>
+    <div class="term-row"><span class="term-output term-green">✓ ${item.name} recreated and healthy! Endpoint online.</span></div>
+  `;
+  document.getElementById('p1-saving-sub').textContent = 'Resource online and running';
+}
+
+// Plan 2 handlers
+let currentP2Cloud = 'AWS';
+function setP2Cloud(el, cloud) {
+  document.querySelectorAll('.demo-provider-pills .prov-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  currentP2Cloud = cloud;
+  updateP2Repo();
+}
+
+function updateP2Repo() {
+  const repo = document.getElementById('p2-repo-select').value;
+  const banner = document.getElementById('p2-info-banner');
+  if (repo === 'auth-api') {
+    banner.innerHTML = `💡 <strong>AI Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>ECS Fargate / Container Apps</strong> for low overhead.`;
+  } else if (repo === 'frontend-app') {
+    banner.innerHTML = `💡 <strong>AI Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>Serverless SSR Container</strong> for automatic scaling.`;
+  } else {
+    banner.innerHTML = `💡 <strong>AI Recommendation (${currentP2Cloud}):</strong> Deploy to <strong>Worker Node / Batch Job</strong> to minimize runtime idle.`;
+  }
+}
+
+function selectP2Arch(tech, cost) {
+  const log = document.getElementById('p2-log-out');
+  log.innerHTML = `<span class="term-green">✓ Provisioning Plan Generated:</span> Selected <strong>${tech}</strong> (${cost}) on <strong>${currentP2Cloud}</strong>. Configured auto-scaling policy, SSL certificate, and IAM security role.`;
+}
+
+// Plan 3 handlers
+let p3Strategy = 'Rolling';
+function setP3Strategy(el, strat) {
+  document.querySelectorAll('#pane-plan3 .demo-btn-secondary').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  p3Strategy = strat;
+}
+
+function updateP3CostGuard(val) {
+  document.getElementById('p3-cost-label').textContent = `+$${val}/mo`;
+}
+
+function runP3DeploySim() {
+  const steps = ['p3-step-1', 'p3-step-2', 'p3-step-3', 'p3-step-4'];
+  steps.forEach(s => {
+    const el = document.getElementById(s);
+    if (el) {
+      el.classList.remove('active', 'success');
+    }
+  });
+  
+  const log = document.getElementById('p3-pipeline-log');
+  log.innerHTML = `<div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> git push origin main</span></div>`;
+
+  setTimeout(() => {
+    const el = document.getElementById('p3-step-1');
+    if (el) el.classList.add('active', 'success');
+    log.innerHTML += `<div class="term-row"><span class="term-dim">[CI/CD]</span> Commit 4f8b91a received. Triggering ${p3Strategy} build pipeline...</div>`;
+  }, 300);
+
+  setTimeout(() => {
+    const el = document.getElementById('p3-step-2');
+    if (el) el.classList.add('active', 'success');
+    log.innerHTML += `<div class="term-row"><span class="term-dim">[ECR]</span> Container image built and pushed: app:v2.4.1 (0 vulnerabilities)</div>`;
+  }, 700);
+
+  setTimeout(() => {
+    const el = document.getElementById('p3-step-3');
+    if (el) el.classList.add('active', 'success');
+    log.innerHTML += `<div class="term-row"><span class="term-dim">[Cost Guard]</span> Estimated cost impact: <span class="term-green">+$12/mo</span> (Within budget limit). Strategy: ${p3Strategy}</div>`;
+  }, 1100);
+
+  setTimeout(() => {
+    const el = document.getElementById('p3-step-4');
+    if (el) el.classList.add('active', 'success');
+    log.innerHTML += `<div class="term-row"><span class="term-output term-green">✓ Deployment successful! Health checks passed across all instances.</span></div>`;
+  }, 1500);
+}
+
+// Plan 5 handlers
+let p5Term = 1;
+function setP5Term(years) {
+  p5Term = years;
+  document.getElementById('p5-btn-1yr').classList.toggle('active', years === 1);
+  document.getElementById('p5-btn-3yr').classList.toggle('active', years === 3);
+  const scaleText = document.getElementById('p5-instance-count').textContent;
+  const scale = scaleText.replace(/[^0-9]/g, '') || 12;
+  updateP5Scale(scale);
+}
+
+function updateP5Scale(val) {
+  document.getElementById('p5-instance-count').textContent = `${val} EC2 Instances`;
+  const baseYr = val * 720;
+  const discountPct = p5Term === 1 ? 0.38 : 0.62;
+  const savings = Math.round(baseYr * discountPct);
+  const postCost = baseYr - savings;
+  const rate = (postCost / (val * 8760)).toFixed(3);
+
+  document.getElementById('p5-savings-val').innerHTML = `$${savings.toLocaleString()}<span class="dsc-unit">/year</span>`;
+  document.getElementById('p5-discount-badge').textContent = p5Term === 1 ? '38% Savings' : '62% Savings';
+  document.getElementById('p5-hourly-rate').textContent = `$${rate} / hr`;
+  document.getElementById('p5-current-cost').textContent = `$${baseYr.toLocaleString()}/yr`;
+  document.getElementById('p5-discount-cost').textContent = `$${postCost.toLocaleString()}/yr`;
+}
+
+function simulateRICommit() {
+  const msg = document.getElementById('p5-commit-msg');
+  msg.innerHTML = `<span class="term-green">✓ Opening AWS Purchase Console with pre-filled savings parameters...</span>`;
+}
+
+// Plan 6 handlers
+function runDriftScan() {
+  const container = document.getElementById('drift-item-container');
+  container.innerHTML = `
+    <div class="term-row" style="padding: 8px 12px; background: rgba(0,184,122,0.1); border-radius: 6px; margin-bottom: 12px;"><span class="term-dim">[Drift Scanner]</span> Polling live AWS CloudTrail and SecurityGroup rules... <span class="term-green">✓ 2 active drift alerts verified.</span></div>
+  ` + container.innerHTML;
+}
+
+function revertDrift(cardId, successMsg) {
+  const card = document.getElementById(cardId);
+  if (card) {
+    const foot = card.querySelector('.drift-foot');
+    foot.innerHTML = `<span class="term-output term-green">✓ Reverted: ${successMsg}</span>`;
+    card.style.borderColor = 'rgba(0,184,122,0.4)';
+    card.style.background = 'rgba(0,184,122,0.04)';
+  }
 }
 </script>
 </body>
