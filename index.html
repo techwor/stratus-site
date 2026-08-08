@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stratus — AI-driven cloud operations platform</title>
+  <meta name="description" content="Self-hosted multi-cloud management. Inventory, cost visibility, lifecycle automation, and AI-driven deployment — all in your own infrastructure." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header class="nav">
+  <div class="nav-inner container">
+    <a href="#" class="nav-brand">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="nbg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00b87a"/>
+            <stop offset="100%" stop-color="#00a0c8"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="14" fill="url(#nbg)"/>
+        <path d="M46 33a8 8 0 0 0-7.4-8A10 10 0 0 0 19 30a6 6 0 0 0 1 12h26a5 5 0 0 0 0-9z" fill="white" opacity=".92"/>
+        <circle cx="22" cy="52" r="3.5" fill="white" opacity=".8"/>
+        <circle cx="32" cy="52" r="3.5" fill="white" opacity=".8"/>
+        <circle cx="42" cy="52" r="3.5" fill="white" opacity=".8"/>
+        <line x1="22" y1="48" x2="22" y2="43" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+        <line x1="32" y1="48" x2="32" y2="43" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+        <line x1="42" y1="48" x2="42" y2="43" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+        <line x1="22" y1="52" x2="42" y2="52" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity=".3"/>
+      </svg>
+      <span>Stratus</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#self-host">Self-host</a>
+      <a href="https://github.com/panbu_pingcorp/procyon-cloud-mgmt" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="container hero-inner">
+    <div class="hero-badge">Open source · Self-hosted · Free</div>
+    <h1 class="hero-title">
+      Your cloud.<br>
+      <span class="gradient-text">Managed by AI.</span>
+    </h1>
+    <p class="hero-sub">
+      Stratus is a self-hosted platform that gives you full visibility and control over your AWS, Azure, and GCP infrastructure —
+      with an AI agent that manages resource lifecycles, deploys apps, and ships code changes automatically.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://github.com/panbu_pingcorp/procyon-cloud-mgmt" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.461-1.11-1.461-.907-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.091-.646.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        View on GitHub
+      </a>
+      <a href="#features" class="btn-ghost">See features ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Clouds</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">$0</span><span class="stat-label">Vendor lock-in</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">Self</span><span class="stat-label">Hosted</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">MIT</span><span class="stat-label">License</span></div>
+    </div>
+  </div>
+  <!-- Terminal mockup -->
+  <div class="container">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="terminal-title">stratus — dashboard</span>
+      </div>
+      <div class="terminal-body">
+        <div class="term-row"><span class="term-dim">Account</span><span class="term-val">Engineering-Dev  <span class="badge badge-aws">AWS</span></span></div>
+        <div class="term-row"><span class="term-dim">Running</span><span class="term-val term-green">14 instances</span></div>
+        <div class="term-row"><span class="term-dim">Stopped</span><span class="term-val term-yellow">3 instances</span></div>
+        <div class="term-row"><span class="term-dim">Est. cost</span><span class="term-val">$312.40 / mo</span></div>
+        <div class="term-row term-spacer"></div>
+        <div class="term-row"><span class="term-dim">Idle waste</span><span class="term-val term-red">↑ $84.20 / mo  <span class="term-hint">dev-eks-cluster running nights</span></span></div>
+        <div class="term-row term-spacer"></div>
+        <div class="term-row"><span class="term-prompt">$</span><span class="term-cmd"> stratus lifecycle stop dev-eks-cluster</span></div>
+        <div class="term-row"><span class="term-output term-green">✓ Config captured · Cluster deleted · Saving $183/mo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CORE USE CASE ── -->
+<section class="coreuse section" id="features">
+  <div class="container">
+    <div class="section-label">The core use case</div>
+    <h2 class="section-title">Stop paying for cloud<br><span class="gradient-text">you're not using.</span></h2>
+    <p class="section-sub">EC2 instances sit idle overnight. EKS dev clusters run 24/7 because deleting them is painful. RDS staging databases burn money all weekend. Stratus sees the waste and stops it — on demand or on a schedule.</p>
+
+    <!-- Schedule mode pills -->
+    <div class="schedule-modes">
+      <div class="schedule-mode active" onclick="setMode(this,'nightly')">
+        <div class="sm-icon">🌙</div>
+        <div class="sm-body">
+          <div class="sm-title">Nightly</div>
+          <div class="sm-desc">Stop at 8 pm · Start at 8 am</div>
+          <div class="sm-saving">Save ~65% vs 24/7</div>
+        </div>
+      </div>
+      <div class="schedule-mode" onclick="setMode(this,'weekend')">
+        <div class="sm-icon">📅</div>
+        <div class="sm-body">
+          <div class="sm-title">Weekend</div>
+          <div class="sm-desc">Stop Fri 8 pm · Start Mon 8 am</div>
+          <div class="sm-saving">Save ~29% vs 24/7</div>
+        </div>
+      </div>
+      <div class="schedule-mode" onclick="setMode(this,'both')">
+        <div class="sm-icon">💸</div>
+        <div class="sm-body">
+          <div class="sm-title">Nightly + Weekend</div>
+          <div class="sm-desc">Nights &amp; all weekend off</div>
+          <div class="sm-saving">Save ~76% vs 24/7</div>
+        </div>
+      </div>
+      <div class="schedule-mode" onclick="setMode(this,'permanent')">
+        <div class="sm-icon">🗑️</div>
+        <div class="sm-body">
+          <div class="sm-title">Permanent stop</div>
+          <div class="sm-desc">Delete with full config capture</div>
+          <div class="sm-saving">Save 100% · Restore anytime</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coreuse-split">
+
+      <!-- Left: cost pain -->
+      <div class="coreuse-panel">
+        <div class="coreuse-panel-label">Idle resources detected</div>
+        <div class="waste-list">
+          <div class="waste-item">
+            <div class="waste-item-top">
+              <div class="waste-item-left">
+                <span class="waste-tag waste-tag-eks">EKS</span>
+                <span class="waste-service">dev-cluster-us-east-1</span>
+              </div>
+              <span class="waste-amount">$183<span class="waste-unit">/mo</span></span>
+            </div>
+            <div class="waste-meta">Running 24/7 · 0 workloads nights &amp; weekends</div>
+            <div class="waste-bar-track"><div class="waste-bar" style="width:78%"></div></div>
+          </div>
+          <div class="waste-item">
+            <div class="waste-item-top">
+              <div class="waste-item-left">
+                <span class="waste-tag waste-tag-rds">RDS</span>
+                <span class="waste-service">db-staging (r5.large)</span>
+              </div>
+              <span class="waste-amount">$280<span class="waste-unit">/mo</span></span>
+            </div>
+            <div class="waste-meta">0 connections since Friday · AWS auto-restarts after 7 days</div>
+            <div class="waste-bar-track"><div class="waste-bar" style="width:100%"></div></div>
+          </div>
+          <div class="waste-item">
+            <div class="waste-item-top">
+              <div class="waste-item-left">
+                <span class="waste-tag waste-tag-ec2">EC2</span>
+                <span class="waste-service">worker-ec2-dev (t3.large)</span>
+              </div>
+              <span class="waste-amount">$47<span class="waste-unit">/mo</span></span>
+            </div>
+            <div class="waste-meta">Avg CPU 1.2% · No traffic in 5 days</div>
+            <div class="waste-bar-track"><div class="waste-bar" style="width:26%"></div></div>
+          </div>
+          <div class="waste-total">
+            <span class="waste-total-label">Total monthly waste</span>
+            <span class="waste-total-num">$510<span class="waste-unit">/mo</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: app UI mockup -->
+      <div class="coreuse-panel coreuse-panel--ui">
+        <div class="coreuse-panel-label">Stratus — Instances</div>
+
+        <!-- Mini app toolbar -->
+        <div class="ui-toolbar">
+          <div class="ui-search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Search…</span>
+          </div>
+          <div class="ui-filters">
+            <span class="ui-filter-btn active">All</span>
+            <span class="ui-filter-btn">Running</span>
+            <span class="ui-filter-btn">Stopped</span>
+          </div>
+        </div>
+
+        <!-- Resource rows -->
+        <div class="ui-table">
+          <div class="ui-table-head">
+            <span>Name</span><span>Type</span><span>State</span><span>Cost</span><span></span>
+          </div>
+
+          <div class="ui-row ui-row--idle">
+            <div class="ui-row-name">
+              <span class="ui-svc-badge ui-svc-eks">EKS</span>
+              <div>
+                <div class="ui-name">dev-cluster-us-east-1</div>
+                <div class="ui-sub">us-east-1 · Engineering-Dev</div>
+              </div>
+            </div>
+            <span class="ui-type">t3.medium ×3</span>
+            <span class="ui-state ui-state--running">
+              <span class="ui-dot ui-dot--running"></span>Running
+            </span>
+            <span class="ui-cost ui-cost--red">$183/mo</span>
+            <div class="ui-actions">
+              <button class="ui-btn ui-btn--stop">Stop</button>
+              <button class="ui-btn ui-btn--sched">Schedule</button>
+            </div>
+          </div>
+
+          <div class="ui-row ui-row--idle">
+            <div class="ui-row-name">
+              <span class="ui-svc-badge ui-svc-rds">RDS</span>
+              <div>
+                <div class="ui-name">db-staging</div>
+                <div class="ui-sub">us-east-1 · r5.large</div>
+              </div>
+            </div>
+            <span class="ui-type">r5.large</span>
+            <span class="ui-state ui-state--running">
+              <span class="ui-dot ui-dot--running"></span>Running
+            </span>
+            <span class="ui-cost ui-cost--red">$280/mo</span>
+            <div class="ui-actions">
+              <button class="ui-btn ui-btn--stop">Stop</button>
+              <button class="ui-btn ui-btn--sched">Schedule</button>
+            </div>
+          </div>
+
+          <div class="ui-row">
+            <div class="ui-row-name">
+              <span class="ui-svc-badge ui-svc-ec2">EC2</span>
+              <div>
+                <div class="ui-name">worker-ec2-dev</div>
+                <div class="ui-sub">us-east-1 · t3.large</div>
+              </div>
+            </div>
+            <span class="ui-type">t3.large</span>
+            <span class="ui-state ui-state--running">
+              <span class="ui-dot ui-dot--running"></span>Running
+            </span>
+            <span class="ui-cost ui-cost--red">$47/mo</span>
+            <div class="ui-actions">
+              <button class="ui-btn ui-btn--stop">Stop</button>
+              <button class="ui-btn ui-btn--sched">Schedule</button>
+            </div>
+          </div>
+
+          <div class="ui-row">
+            <div class="ui-row-name">
+              <span class="ui-svc-badge ui-svc-ec2">EC2</span>
+              <div>
+                <div class="ui-name">api-prod-1</div>
+                <div class="ui-sub">us-east-1 · t3.medium</div>
+              </div>
+            </div>
+            <span class="ui-type">t3.medium</span>
+            <span class="ui-state ui-state--running">
+              <span class="ui-dot ui-dot--running"></span>Running
+            </span>
+            <span class="ui-cost">$24/mo</span>
+            <div class="ui-actions">
+              <button class="ui-btn ui-btn--stop">Stop</button>
+              <button class="ui-btn ui-btn--sched">Schedule</button>
+            </div>
+          </div>
+
+          <div class="ui-row">
+            <div class="ui-row-name">
+              <span class="ui-svc-badge ui-svc-ecs">ECS</span>
+              <div>
+                <div class="ui-name">backend-svc-staging</div>
+                <div class="ui-sub">us-east-1 · Fargate</div>
+              </div>
+            </div>
+            <span class="ui-type">Fargate</span>
+            <span class="ui-state ui-state--stopped">
+              <span class="ui-dot ui-dot--stopped"></span>Stopped
+            </span>
+            <span class="ui-cost ui-cost--dim">$0/mo</span>
+            <div class="ui-actions">
+              <button class="ui-btn ui-btn--start">Start</button>
+              <button class="ui-btn ui-btn--sched">Schedule</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-footer-bar">
+          <span class="ui-footer-idle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            3 idle resources · $510/mo waste detected
+          </span>
+          <span class="ui-footer-saved">Saved this month: <strong>$0</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Service support table -->
+    <div class="service-support">
+      <div class="service-support-title">What you can control</div>
+      <div class="service-table-wrap">
+        <table class="service-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Cloud</th>
+              <th>View &amp; cost</th>
+              <th>Stop</th>
+              <th>Start</th>
+              <th>Schedule</th>
+              <th>Config capture (AI)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="svc-name">EC2 Instances</span></td>
+              <td><span class="pill pill-aws">AWS</span></td>
+              <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+              <td class="na">—</td>
+            </tr>
+            <tr>
+              <td><span class="svc-name">EKS Clusters</span></td>
+              <td><span class="pill pill-aws">AWS</span></td>
+              <td class="yes">✓</td><td class="yes">✓ <span class="svc-note">delete + capture</span></td><td class="yes">✓ <span class="svc-note">recreate</span></td><td class="yes">✓</td>
+              <td class="roadmap-yes">✓ <span class="roadmap-tag">Q3 2026</span></td>
+            </tr>
+            <tr>
+              <td><span class="svc-name">ECS Services</span></td>
+              <td><span class="pill pill-aws">AWS</span></td>
+              <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+              <td class="roadmap-yes">✓ <span class="roadmap-tag">Q3 2026</span></td>
+            </tr>
+            <tr>
+              <td><span class="svc-name">RDS Instances</span></td>
+              <td><span class="pill pill-aws">AWS</span></td>
+              <td class="yes">✓</td><td class="yes">✓ <span class="svc-note">delete + snapshot</span></td><td class="yes">✓ <span class="svc-note">restore</span></td><td class="yes">✓</td>
+              <td class="roadmap-yes">✓ <span class="roadmap-tag">Q3 2026</span></td>
+            </tr>
+            <tr>
+              <td><span class="svc-name">Azure VMs</span></td>
+              <td><span class="pill pill-azure">Azure</span></td>
+              <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">Planned</td>
+              <td class="na">—</td>
+            </tr>
+            <tr>
+              <td><span class="svc-name">GCP Instances</span></td>
+              <td><span class="pill pill-gcp">GCP</span></td>
+              <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">Planned</td>
+              <td class="na">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features section" id="more-features">
+  <div class="container">
+    <div class="section-label">What Stratus does today</div>
+    <h2 class="section-title">Full visibility.<br>Real control.</h2>
+    <p class="section-sub">Everything you need to understand and manage cloud infrastructure across multiple accounts and clouds — without leaving your own environment.</p>
+
+    <div class="features-grid">
+
+      <div class="feature-card feature-card--wide">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Multi-cloud inventory</h3>
+        <p>EC2 instances, RDS databases, EKS clusters, ECS services, Azure VMs, and GCP instances — all in one view across every account and region.</p>
+        <div class="feature-pills">
+          <span class="pill pill-aws">AWS</span>
+          <span class="pill pill-azure">Azure</span>
+          <span class="pill pill-gcp">GCP</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Cost visibility</h3>
+        <p>Estimated monthly cost per resource, per account, and per cloud — updated on every scan. No billing API integration required.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Schedules</h3>
+        <p>Automatically stop instances at night and start them in the morning. Set recurring schedules per resource with cron-style precision.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Audit log</h3>
+        <p>Every start, stop, and configuration change is logged with the user, timestamp, and resource. Full compliance-ready trail.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Secure by default</h3>
+        <p>TOTP two-factor authentication, role-based access (admin vs viewer), and session management baked in from day one.</p>
+      </div>
+
+      <div class="feature-card feature-card--wide">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Savings suggestions</h3>
+        <p>Stratus flags idle resources — instances running for days with near-zero CPU — and surfaces the estimated monthly waste so you can act on it immediately.</p>
+        <div class="savings-example">
+          <div class="savings-row"><span class="savings-name">dev-eks-cluster</span><span class="savings-waste">$183/mo wasted</span><span class="savings-action">Stop →</span></div>
+          <div class="savings-row"><span class="savings-name">db-staging-r5</span><span class="savings-waste">$280/mo wasted</span><span class="savings-action">Stop →</span></div>
+          <div class="savings-row"><span class="savings-name">worker-ec2-idle</span><span class="savings-waste">$47/mo wasted</span><span class="savings-action">Stop →</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── VS PORTER ── -->
+<section class="comparison section" id="compare">
+  <div class="container">
+    <div class="section-label">Why Stratus</div>
+    <h2 class="section-title">Built different.</h2>
+    <p class="section-sub">Porter and Render are great PaaS products — but they host your infrastructure on their platform. Stratus runs in your own cloud account.</p>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-stratus"><span class="badge-stratus">Stratus</span></th>
+            <th>Porter</th>
+            <th>Render</th>
+            <th>AWS Console</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Runs in your cloud account</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+          <tr><td>Multi-cloud (AWS + Azure + GCP)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Cost visibility across accounts</td><td class="yes">✓</td><td class="partial">Partial</td><td class="no">✗</td><td class="partial">Partial</td></tr>
+          <tr><td>Cost shown before deployment</td><td class="yes">✓ <span class="roadmap-tag">Q1 2027</span></td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>AI lifecycle agent (EKS/RDS delete+recreate)</td><td class="yes">✓ <span class="roadmap-tag">Q3 2026</span></td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Drift detection</td><td class="yes">✓ <span class="roadmap-tag">Q3 2028</span></td><td class="no">✗</td><td class="no">✗</td><td class="partial">AWS Config (complex)</td></tr>
+          <tr><td>Self-hosted / open source</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">N/A</td></tr>
+          <tr><td>Pricing</td><td class="yes">Free</td><td class="no">$499+/mo</td><td class="no">$85+/mo</td><td class="partial">AWS charges apply</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="roadmap section" id="roadmap">
+  <div class="container">
+    <div class="section-label">What's coming</div>
+    <h2 class="section-title">The roadmap.</h2>
+    <p class="section-sub">Each plan builds on the last — from cost visibility to AI agents to full CI/CD and financial optimisation.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item timeline-item--done">
+        <div class="timeline-marker timeline-marker--done">✓</div>
+        <div class="timeline-content">
+          <div class="timeline-when">Now</div>
+          <h3>Stratus v1 — Multi-cloud visibility</h3>
+          <p>EC2, RDS, EKS, ECS inventory · Cost estimates · Start/Stop · Schedules · Audit log · TOTP auth</p>
+          <div class="timeline-pills">
+            <span class="pill pill-done">Shipped</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">1</div>
+        <div class="timeline-content">
+          <div class="timeline-when">Q3 2026</div>
+          <h3>Infrastructure Lifecycle Agent</h3>
+          <p>AI agent that captures full EKS/RDS/ECS configuration, deletes the resource, and recreates it on demand from the exact config — with a Plan + Approve flow so nothing happens without confirmation.</p>
+          <div class="timeline-feature-list">
+            <div class="tfl-item"><span class="tfl-icon">→</span>Dev EKS cluster: save $183/mo</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>RDS r5.large: save $280/mo</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>Powered by Groq (free tier)</div>
+          </div>
+          <div class="timeline-pills">
+            <span class="pill pill-plan">Plan 1</span>
+            <span class="pill">4–6 weeks</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">2</div>
+        <div class="timeline-content">
+          <div class="timeline-when">Q1 2027</div>
+          <h3>AI Deployment Agent</h3>
+          <p>Point at any repo URL — the agent detects your stack, shows a cost comparison across ECS Fargate vs EKS vs EC2 vs Lambda <em>before</em> creating anything, then provisions and deploys end-to-end.</p>
+          <div class="cost-compare-mini">
+            <div class="ccm-row"><span>ECS Fargate</span><span class="ccm-cost green">$18–35/mo</span><span class="ccm-rec">Recommended</span></div>
+            <div class="ccm-row"><span>EKS</span><span class="ccm-cost">$140–180/mo</span><span></span></div>
+            <div class="ccm-row"><span>EC2 t3.medium</span><span class="ccm-cost">$30–45/mo</span><span></span></div>
+            <div class="ccm-row"><span>Lambda</span><span class="ccm-cost green">$0–3/mo</span><span></span></div>
+          </div>
+          <div class="timeline-pills">
+            <span class="pill pill-plan">Plan 2</span>
+            <span class="pill">3–6 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">3</div>
+        <div class="timeline-content">
+          <div class="timeline-when">Q3 2027</div>
+          <h3>CI/CD Integration Layer</h3>
+          <p>Connect GitHub, GitLab, or Bitbucket. Push to main → Stratus builds, pushes to ECR, updates your service, health-checks, and rolls back automatically if anything fails.</p>
+          <div class="timeline-feature-list">
+            <div class="tfl-item"><span class="tfl-icon">→</span>Rolling, blue/green, canary strategies</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>Cost guard: block deploy if monthly cost jumps unexpectedly</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>Slack / Teams notifications</div>
+          </div>
+          <div class="timeline-pills">
+            <span class="pill pill-plan">Plan 3</span>
+            <span class="pill">3–4 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">5</div>
+        <div class="timeline-content">
+          <div class="timeline-when">Q1 2028</div>
+          <h3>FinOps: RI &amp; Savings Plan Advisor</h3>
+          <p>Stratus already knows what's running, for how long, and on what schedule. It uses that to recommend exactly which Reserved Instances to buy — excluding instances you're about to stop.</p>
+          <div class="timeline-feature-list">
+            <div class="tfl-item"><span class="tfl-icon">→</span>Typical saving: $1,000–5,000/yr per account</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>One-click to AWS console to commit purchase</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>Azure + GCP committed use discounts</div>
+          </div>
+          <div class="timeline-pills">
+            <span class="pill pill-plan">Plan 5</span>
+            <span class="pill">2–4 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">6</div>
+        <div class="timeline-content">
+          <div class="timeline-when">Q3 2028</div>
+          <h3>Infrastructure Drift Detection</h3>
+          <p>Polls live AWS/Azure/GCP state every 6 hours and diffs against Stratus's known config. Alerts when someone opens a security group port or bumps a task definition outside the normal deploy process.</p>
+          <div class="timeline-feature-list">
+            <div class="tfl-item"><span class="tfl-icon">→</span>High severity: port 5432 open to 0.0.0.0/0 — alert immediately</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>One-click revert to known-good config</div>
+            <div class="tfl-item"><span class="tfl-icon">→</span>Compliance-ready audit trail</div>
+          </div>
+          <div class="timeline-pills">
+            <span class="pill pill-plan">Plan 6</span>
+            <span class="pill">3–4 months</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SELF-HOST ── -->
+<section class="selfhost section" id="self-host">
+  <div class="container">
+    <div class="section-label">Get started</div>
+    <h2 class="section-title">Up in 2 minutes.</h2>
+    <p class="section-sub">Docker Compose. No Kubernetes, no SaaS account, no credit card.</p>
+    <div class="code-steps">
+      <div class="code-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-label">Clone the repo</div>
+          <div class="code-block">
+            <code>git clone https://github.com/panbu_pingcorp/procyon-cloud-mgmt</code>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="code-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-label">Add your AWS credentials to <code>.env</code></div>
+          <div class="code-block">
+            <code>cp backend/.env.example backend/.env<br># edit AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY</code>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="code-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-label">Start</div>
+          <div class="code-block">
+            <code>./run.sh up -d</code>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="selfhost-note">Stratus runs on any Linux host with Docker. Open <strong>http://localhost:3001</strong> to log in.</p>
+    <a href="https://github.com/panbu_pingcorp/procyon-cloud-mgmt" class="btn-primary" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.461-1.11-1.461-.907-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.091-.646.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      Get started on GitHub
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <svg width="24" height="24" viewBox="0 0 64 64" fill="none">
+        <defs>
+          <linearGradient id="fbg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00b87a"/>
+            <stop offset="100%" stop-color="#00a0c8"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="14" fill="url(#fbg)"/>
+        <path d="M46 33a8 8 0 0 0-7.4-8A10 10 0 0 0 19 30a6 6 0 0 0 1 12h26a5 5 0 0 0 0-9z" fill="white" opacity=".92"/>
+        <circle cx="22" cy="52" r="3.5" fill="white" opacity=".8"/>
+        <circle cx="32" cy="52" r="3.5" fill="white" opacity=".8"/>
+        <circle cx="42" cy="52" r="3.5" fill="white" opacity=".8"/>
+      </svg>
+      <span>Stratus</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/panbu_pingcorp/procyon-cloud-mgmt" target="_blank" rel="noopener">GitHub</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#self-host">Self-host</a>
+    </div>
+    <div class="footer-copy">MIT License · Built with Node, React, Postgres</div>
+  </div>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.previousElementSibling.innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+const savingsByMode = {
+  nightly:   { eks: '$119/mo', rds: '$182/mo', ec2: '$31/mo', total: '$332/mo', yr: '$3,984/yr' },
+  weekend:   { eks: '$53/mo',  rds: '$81/mo',  ec2: '$14/mo', total: '$148/mo', yr: '$1,776/yr' },
+  both:      { eks: '$139/mo', rds: '$213/mo', ec2: '$36/mo', total: '$388/mo', yr: '$4,656/yr' },
+  permanent: { eks: '$183/mo', rds: '$280/mo', ec2: '$47/mo', total: '$510/mo', yr: '$6,120/yr' },
+};
+
+function setMode(el, mode) {
+  document.querySelectorAll('.schedule-mode').forEach(m => m.classList.remove('active'));
+  el.classList.add('active');
+  const s = savingsByMode[mode];
+  const amounts = document.querySelectorAll('.waste-amount');
+  if (amounts[0]) amounts[0].innerHTML = s.eks + '<span class="waste-unit"> saved</span>';
+  if (amounts[1]) amounts[1].innerHTML = s.rds + '<span class="waste-unit"> saved</span>';
+  if (amounts[2]) amounts[2].innerHTML = s.ec2 + '<span class="waste-unit"> saved</span>';
+  const totalEl = document.querySelector('.waste-total-num');
+  if (totalEl) totalEl.innerHTML = s.total + '<span class="waste-unit">/mo</span>';
+  const savedEl = document.querySelector('.ui-footer-saved strong');
+  if (savedEl) savedEl.textContent = s.yr;
+  // Update label
+  const labelEl = document.querySelector('.waste-total-label');
+  if (labelEl) labelEl.textContent = mode === 'permanent' ? 'Total monthly waste' : 'Monthly saving with this schedule';
+  // Update bar widths proportionally
+  const bars = document.querySelectorAll('.waste-bar');
+  const maxes = { nightly:[65,65,65], weekend:[29,29,29], both:[76,76,76], permanent:[78,100,26] };
+  const w = maxes[mode];
+  if (bars[0]) bars[0].style.width = w[0] + '%';
+  if (bars[1]) bars[1].style.width = w[1] + '%';
+  if (bars[2]) bars[2].style.width = w[2] + '%';
+  // Flip bar color for saving modes
+  const color = mode === 'permanent' ? 'linear-gradient(90deg,#c0392b,#f05555)' : 'linear-gradient(90deg,#007a50,#00b87a)';
+  bars.forEach(b => b.style.background = color);
+  const amtColor = mode === 'permanent' ? 'var(--red)' : 'var(--accent)';
+  amounts.forEach(a => a.style.color = amtColor);
+  if (totalEl) totalEl.style.color = amtColor;
+  const wasteColor = mode === 'permanent' ? 'var(--red)' : 'var(--accent)';
+  document.querySelector('.ui-footer-idle').style.color = mode === 'permanent' ? 'var(--red)' : 'var(--text-2)';
+}
+</script>
+</body>
+</html>
