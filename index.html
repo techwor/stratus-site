@@ -39,7 +39,7 @@
     <nav class="nav-links">
       <a href="#features">Features</a>
       <a href="#modules">Modules</a>
-      <a href="#self-host">Self-host</a>
+      <a href="#contact">Contact Us</a>
       <a href="https://github.com/techwor/stratus-cloud-management.git" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
     </nav>
     <button class="nav-hamburger" aria-label="Open menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -849,49 +849,110 @@
   </div>
 </section>
 
-<!-- ── SELF-HOST ── -->
-<section class="selfhost section" id="self-host">
+<!-- ── CONTACT US ── -->
+<section class="contact-section section" id="contact">
   <div class="container">
-    <div class="section-label">Get started</div>
-    <h2 class="section-title">Up in 2 minutes.</h2>
-    <p class="section-sub">Docker Compose. No Kubernetes, no SaaS account, no credit card.</p>
-    <div class="code-steps">
-      <div class="code-step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-label">Clone the repo</div>
-          <div class="code-block">
-            <code>git clone https://github.com/techwor/stratus-cloud-management.git</code>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    <div class="section-label">Contact Us</div>
+    <h2 class="section-title">Talk to our cloud experts.</h2>
+    <p class="section-sub">Have questions about Stratus, multi-cloud cost reduction, self-hosting policies, or enterprise support? Reach out and we'll reply within 24 hours.</p>
+
+    <div class="contact-grid">
+      <!-- Left: Form -->
+      <div class="contact-card">
+        <form id="contact-form" onsubmit="handleContactSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name" class="form-label">Full Name <span class="required-star">*</span></label>
+              <input type="text" id="contact-name" class="form-input" placeholder="e.g. Alex Morgan" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-email" class="form-label">Work Email <span class="required-star">*</span></label>
+              <input type="email" id="contact-email" class="form-input" placeholder="alex@company.com" required />
+            </div>
           </div>
+
+          <div class="form-group">
+            <label class="form-label">Inquiry Category</label>
+            <div class="category-pills">
+              <button type="button" class="category-pill active" onclick="selectCategory(this, 'General Inquiry')">General</button>
+              <button type="button" class="category-pill" onclick="selectCategory(this, 'Enterprise Self-Hosting')">Self-Hosting</button>
+              <button type="button" class="category-pill" onclick="selectCategory(this, 'FinOps & Cost Audit')">FinOps Audit</button>
+              <button type="button" class="category-pill" onclick="selectCategory(this, 'Feature Request')">Feature Request</button>
+            </div>
+            <input type="hidden" id="contact-category" value="General Inquiry" />
+          </div>
+
+          <div class="form-group">
+            <label for="contact-cloud" class="form-label">Primary Infrastructure</label>
+            <select id="contact-cloud" class="form-select">
+              <option value="AWS">AWS (Amazon Web Services)</option>
+              <option value="Azure">Microsoft Azure</option>
+              <option value="GCP">Google Cloud Platform</option>
+              <option value="Multi-Cloud" selected>Multi-Cloud (AWS + Azure/GCP)</option>
+              <option value="Other">Other / On-Premises</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message" class="form-label">Message <span class="required-star">*</span></label>
+            <textarea id="contact-message" class="form-textarea" rows="4" placeholder="Tell us about your infrastructure setup, cloud cost challenges, or questions..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary btn-submit-contact">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send Message
+          </button>
+        </form>
+
+        <div id="contact-success" class="form-success-box" style="display: none;">
+          <div class="success-icon">✓</div>
+          <h3 class="success-title">Message Sent Successfully!</h3>
+          <p class="success-desc">Thank you for reaching out. Our DevOps &amp; FinOps engineering team has received your message and will respond to <strong id="sent-email-display">your email</strong> shortly.</p>
+          <button type="button" class="btn-outline btn-reset-form" onclick="resetContactForm()">Send Another Message</button>
         </div>
       </div>
-      <div class="code-step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-label">Add your AWS credentials to <code>.env</code></div>
-          <div class="code-block">
-            <code>cp backend/.env.example backend/.env<br># edit AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY</code>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+      <!-- Right: Contact info & support cards -->
+      <div class="contact-sidebar">
+        <div class="contact-info-card">
+          <div class="info-card-header">
+            <div class="info-icon-box">💬</div>
+            <div>
+              <h4 class="info-card-title">Direct Support</h4>
+              <p class="info-card-sub">Engineers answering engineers</p>
+            </div>
           </div>
+          <p class="info-card-text">Need immediate technical guidance or help setting up Stratus multi-cloud policies?</p>
+          <a href="mailto:support@stratuscloud.io" class="info-link">support@stratuscloud.io →</a>
         </div>
-      </div>
-      <div class="code-step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-label">Start</div>
-          <div class="code-block">
-            <code>./run.sh up -d</code>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+        <div class="contact-info-card">
+          <div class="info-card-header">
+            <div class="info-icon-box">⚡</div>
+            <div>
+              <h4 class="info-card-title">Fast SLA Guarantee</h4>
+              <p class="info-card-sub">&lt; 24 Hour Response</p>
+            </div>
           </div>
+          <p class="info-card-text">We review all incoming inquiries daily across UTC, EST, and PST timezone windows.</p>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="info-card-header">
+            <div class="info-icon-box">🌐</div>
+            <div>
+              <h4 class="info-card-title">Open Source Community</h4>
+              <p class="info-card-sub">GitHub &amp; Discussions</p>
+            </div>
+          </div>
+          <p class="info-card-text">Join hundreds of DevOps engineers building automated lifecycle policies.</p>
+          <a href="https://github.com/techwor/stratus-cloud-management.git" target="_blank" rel="noopener" class="info-link">Visit GitHub Repository →</a>
         </div>
       </div>
     </div>
-    <p class="selfhost-note">Stratus runs on any Linux host with Docker. Open <strong>http://localhost:3001</strong> to log in.</p>
-    <a href="https://github.com/techwor/stratus-cloud-management.git" class="btn-primary" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.461-1.11-1.461-.907-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.091-.646.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-      Get started on GitHub
-    </a>
   </div>
 </section>
 
@@ -917,7 +978,7 @@
     <div class="footer-links">
       <a href="https://github.com/techwor/stratus-cloud-management.git" target="_blank" rel="noopener">GitHub</a>
       <a href="#modules">Modules</a>
-      <a href="#self-host">Self-host</a>
+      <a href="#contact">Contact Us</a>
     </div>
     <div class="footer-copy">MIT License · Built with Node, React, Postgres</div>
   </div>
@@ -1167,6 +1228,36 @@ function revertDrift(cardId, successMsg) {
     card.style.borderColor = 'rgba(0,184,122,0.4)';
     card.style.background = 'rgba(0,184,122,0.04)';
   }
+}
+
+/* ── CONTACT US FORM LOGIC ── */
+function selectCategory(btn, category) {
+  document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('contact-category').value = category;
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('contact-name').value;
+  const email = document.getElementById('contact-email').value;
+  const category = document.getElementById('contact-category').value;
+  const cloud = document.getElementById('contact-cloud').value;
+  const message = document.getElementById('contact-message').value;
+
+  if (!email || !message) return;
+
+  document.getElementById('sent-email-display').textContent = email;
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('contact-success').style.display = 'block';
+}
+
+function resetContactForm() {
+  document.getElementById('contact-form').reset();
+  document.getElementById('contact-form').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+  const firstPill = document.querySelector('.category-pill');
+  if (firstPill) selectCategory(firstPill, 'General Inquiry');
 }
 </script>
 </body>
