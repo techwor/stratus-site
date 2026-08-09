@@ -27,14 +27,13 @@ export default function Navbar() {
         <nav className={`nav-links ${mobileOpen ? 'open' : ''}`}>
           <a href="#overview" onClick={() => setMobileOpen(false)}>Overview &amp; Control</a>
           <a href="#capabilities" onClick={() => setMobileOpen(false)}>Capabilities</a>
-          <a href="#contact" onClick={() => setMobileOpen(false)}>Contact Us</a>
           <a
             href="#contact"
             className="btn-primary"
             style={{ padding: '6px 16px', fontSize: '13px' }}
             onClick={() => setMobileOpen(false)}
           >
-            <span>Get Started</span>
+            <span>Contact Us</span>
             <ArrowRight size={14} />
           </a>
         </nav>
