@@ -138,11 +138,6 @@ export default function Hero() {
       <div className="container">
         {/* Hero Header */}
         <div className="hero-header">
-          <div className="hero-badge-pill">
-            <span className="hero-stat-dot"></span>
-            Open Source · Self-Hosted · AWS Organization
-          </div>
-
           <h1 className="hero-title">
             EC2, EKS &amp; RDS Cost Savings Engine.<br />
             <span className="gradient-text">Weekend, Nightly, Nights+Weekends &amp; Permanent.</span>
