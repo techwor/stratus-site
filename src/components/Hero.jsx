@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Github, ArrowRight, LayoutDashboard, Server, Layers, Database, Clock, FileText, DollarSign, Check, Square, Play, TrendingDown, AlertTriangle } from 'lucide-react';
+import { Github, ArrowRight, LayoutDashboard, Server, Layers, Database, Clock, FileText, DollarSign, Check, Square, Play, TrendingDown, AlertTriangle, Shield } from 'lucide-react';
 
 export default function Hero() {
   const [activeAppTab, setActiveAppTab] = useState('ec2'); // 'dashboard' | 'ec2' | 'eks' | 'rds' | 'schedules' | 'cost' | 'audit'
-  const [ec2SubTab, setEc2SubTab] = useState('instances'); // 'instances' | 'cost'
+  const [ec2SubTab, setEc2SubTab] = useState('cost'); // 'instances' | 'cost'
   const [eksSubTab, setEksSubTab] = useState('clusters'); // 'clusters' | 'cost'
 
   // Mock state reflecting real app dataset
@@ -23,12 +23,61 @@ export default function Hero() {
 
   const [ngRestoreSize, setNgRestoreSize] = useState(3);
   const [selectedPreset, setSelectedPreset] = useState('nightly');
+  const [expandedStrategy, setExpandedStrategy] = useState('both');
 
   const [auditLogs, setAuditLogs] = useState([
     { id: 1, time: '12:02:10 PM', user: 'parithi (admin)', action: 'eks:stop-cluster', desc: 'Scaled dev-cluster-us-east-1 NodeGroup to 0 nodes', status: 'SUCCESS' },
     { id: 2, time: '11:45:00 AM', user: 'parithi (admin)', action: 'ec2:stop', desc: 'Stopped worker-ec2-dev (t3.large)', status: 'SUCCESS' },
     { id: 3, time: '09:00:00 AM', user: 'system.cron', action: 'schedule:create', desc: 'Created Nightly shutdown schedule for dev accounts', status: 'SUCCESS' },
   ]);
+
+  // Real app cost savings strategy definitions from stratus-cloud-management
+  const savingsStrategies = [
+    {
+      key: 'weekend',
+      label: 'Weekend Shutdown',
+      icon: '⏸',
+      desc: 'Stop Sat & Sun (48 hrs/wk). Ideal for dev/test workloads not needed on weekends.',
+      badge: '−28%',
+      savedHours: 208,
+      color: '#00a0c8',
+      bg: 'rgba(0, 160, 200, 0.08)',
+      border: 'rgba(0, 160, 200, 0.3)'
+    },
+    {
+      key: 'nightly',
+      label: 'Nightly Shutdown',
+      icon: '🌙',
+      desc: 'Stop 8 PM to 8 AM (12 hrs/day). Great for workloads needed only in business hours.',
+      badge: '−49%',
+      savedHours: 360,
+      color: '#00b87a',
+      bg: 'rgba(0, 184, 122, 0.08)',
+      border: 'rgba(0, 184, 122, 0.3)'
+    },
+    {
+      key: 'both',
+      label: 'Nights + Weekends',
+      icon: '🌙⏸',
+      desc: 'Stop nightly AND weekends — business hours only (Mon–Fri, 8 AM–8 PM).',
+      badge: '−64%',
+      savedHours: 468,
+      color: '#f5c842',
+      bg: 'rgba(245, 200, 66, 0.08)',
+      border: 'rgba(245, 200, 66, 0.3)'
+    },
+    {
+      key: 'permanent',
+      label: 'Permanently Stop',
+      icon: '⏹',
+      desc: 'Decommission idle instances completely. 100% saved with state capture.',
+      badge: '−100%',
+      savedHours: 730,
+      color: '#f05555',
+      bg: 'rgba(240, 85, 85, 0.08)',
+      border: 'rgba(240, 85, 85, 0.3)'
+    }
+  ];
 
   const toggleEc2 = (id) => {
     setEc2Instances(prev => prev.map(inst => {
@@ -79,11 +128,7 @@ export default function Hero() {
     }));
   };
 
-  const templates = [
-    { id: 'weekend', label: 'Weekend shutdown', cron: 'Stop Fri 22:00 · Start Mon 08:00', saving: 'Save ~29%' },
-    { id: 'nightly', label: 'Nightly shutdown', cron: 'Stop daily 22:00 · Start daily 07:00', saving: 'Save ~65%' },
-    { id: 'business', label: 'Business hours', cron: 'Stop Mon-Fri 19:00 · Start Mon-Fri 08:00', saving: 'Save ~76%' }
-  ];
+  const totalMonthlySpend = ec2Instances.reduce((a, b) => a + b.cost, 0) + eksClusters.reduce((a, b) => a + b.cost, 0) + rdsInstances.reduce((a, b) => a + b.cost, 0);
 
   return (
     <section className="hero" id="overview">
@@ -99,12 +144,12 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-title">
-            EC2, EKS &amp; RDS Start/Stop Control.<br />
-            <span className="gradient-text">Separated Start-Stop &amp; Cost Sub-Tabs.</span>
+            EC2, EKS &amp; RDS Cost Savings Engine.<br />
+            <span className="gradient-text">Weekend, Nightly, Nights+Weekends &amp; Permanent.</span>
           </h1>
 
           <p className="hero-sub">
-            Stratus cleanly separates service Start/Stop lifecycle controls, EKS NodeGroup scale-to-0, paired cron schedules, and dedicated Cost &amp; Savings sub-tabs — matching the exact application codebase.
+            Stratus calculates exact downtime savings for <strong>Weekend Shutdown (−28%)</strong>, <strong>Nightly Shutdown (−49%)</strong>, <strong>Nights + Weekends (−64%)</strong>, and <strong>Permanent Stop (−100%)</strong> across all workloads.
           </p>
 
           <div className="hero-ctas">
@@ -124,15 +169,19 @@ export default function Hero() {
 
           <div className="hero-stats-row">
             <div className="hero-stat-item">
-              <strong>Separated</strong> Start-Stop &amp; Cost Sub-Tabs
+              <strong>Weekend</strong> (−28% Saved)
             </div>
             <div style={{ width: 1, height: 14, background: 'var(--border-2)' }}></div>
             <div className="hero-stat-item">
-              <strong>NodeGroup Scale-to-0</strong> EKS Control
+              <strong>Nightly</strong> (−49% Saved)
             </div>
             <div style={{ width: 1, height: 14, background: 'var(--border-2)' }}></div>
             <div className="hero-stat-item">
-              <strong>Paired Cron</strong> Schedules
+              <strong>Nights + Weekends</strong> (−64% Saved)
+            </div>
+            <div style={{ width: 1, height: 14, background: 'var(--border-2)' }}></div>
+            <div className="hero-stat-item">
+              <strong>Permanent</strong> (−100% Saved)
             </div>
           </div>
         </div>
@@ -273,8 +322,8 @@ export default function Hero() {
             <div className="panel-side" style={{ padding: '24px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px', marginBottom: '20px' }}>
                 <div style={{ background: 'var(--surface-2)', padding: '14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>AWS Accounts</div>
-                  <div style={{ fontSize: '22px', fontWeight: 800 }}>4 Accounts</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Current Monthly Spend</div>
+                  <div style={{ fontSize: '22px', fontWeight: 800 }}>${totalMonthlySpend}/mo</div>
                 </div>
                 <div style={{ background: 'var(--surface-2)', padding: '14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
                   <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Active Compute</div>
@@ -283,28 +332,28 @@ export default function Hero() {
                   </div>
                 </div>
                 <div style={{ background: 'var(--surface-2)', padding: '14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Stopped Compute</div>
-                  <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--yellow)' }}>
-                    {ec2Instances.filter(i => i.state === 'stopped').length + eksClusters.filter(c => c.state === 'scaled_zero').length} Stopped
+                  <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Nightly Savings Impact</div>
+                  <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--accent)' }}>
+                    −${Math.round(totalMonthlySpend * 0.49)}/mo (−49%)
                   </div>
                 </div>
                 <div style={{ background: 'var(--surface-2)', padding: '14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Total Monthly Cost</div>
-                  <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--red)' }}>
-                    ${ec2Instances.reduce((a, b) => a + b.cost, 0) + eksClusters.reduce((a, b) => a + b.cost, 0) + rdsInstances.reduce((a, b) => a + b.cost, 0)}/mo
+                  <div style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Nights + Weekends Impact</div>
+                  <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--accent)' }}>
+                    −${Math.round(totalMonthlySpend * 0.64)}/mo (−64%)
                   </div>
                 </div>
               </div>
 
               <div style={{ background: 'rgba(240, 85, 85, 0.08)', border: '1px solid rgba(240,85,85,0.25)', padding: '14px 18px', borderRadius: 'var(--radius)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
-                  <strong style={{ fontSize: '14px', color: 'var(--red)' }}>⚠ Idle Savings Suggestion Detected</strong>
+                  <strong style={{ fontSize: '14px', color: 'var(--red)' }}>⚠ Cost Optimization Suggestions Active</strong>
                   <div style={{ fontSize: '12.5px', color: 'var(--text-2)' }}>
-                    EC2 and EKS development workloads running 24/7 with zero traffic nights &amp; weekends.
+                    4 downtime strategies available: Weekend (−28%), Nightly (−49%), Nights + Weekends (−64%), Permanent (−100%).
                   </div>
                 </div>
                 <button className="btn-primary" style={{ padding: '6px 14px', fontSize: '12px' }} onClick={() => setActiveAppTab('ec2')}>
-                  View EC2 Instances →
+                  View Cost Sub-Tab →
                 </button>
               </div>
             </div>
@@ -328,7 +377,7 @@ export default function Hero() {
                     onClick={() => setEc2SubTab('cost')}
                     style={{ fontSize: '12.5px', padding: '6px 14px' }}
                   >
-                    <DollarSign size={13} /> Cost Breakdown &amp; Savings
+                    <DollarSign size={13} /> Cost &amp; 4 Savings Strategies
                   </button>
                 </div>
                 <span className="badge badge-aws">EC2 Service</span>
@@ -370,33 +419,56 @@ export default function Hero() {
                 </div>
               )}
 
-              {/* Sub-Tab 2: Cost Breakdown */}
+              {/* Sub-Tab 2: 4 Savings Strategies Cards matching CostTab.jsx in stratus-cloud-management */}
               {ec2SubTab === 'cost' && (
                 <div>
-                  <div style={{ background: 'var(--surface-2)', padding: '16px', borderRadius: 'var(--radius)', border: '1px solid var(--border)', marginBottom: '16px' }}>
-                    <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '8px', color: 'var(--accent)' }}>
-                      💰 Per-Instance EC2 Cost Breakdown
-                    </div>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left' }}>
-                      <thead>
-                        <tr style={{ color: 'var(--text-2)', borderBottom: '1px solid var(--border)' }}>
-                          <th style={{ padding: '8px' }}>Instance</th>
-                          <th style={{ padding: '8px' }}>Daily Cost</th>
-                          <th style={{ padding: '8px' }}>Monthly Cost</th>
-                          <th style={{ padding: '8px' }}>Potential Downtime Saving</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {ec2Instances.map(i => (
-                          <tr key={i.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                            <td style={{ padding: '8px', fontWeight: 600 }}>{i.name} ({i.type})</td>
-                            <td style={{ padding: '8px', fontFamily: 'var(--font-mono)' }}>${i.dailyCost}/day</td>
-                            <td style={{ padding: '8px', fontFamily: 'var(--font-mono)', color: 'var(--red)' }}>${i.cost}/mo</td>
-                            <td style={{ padding: '8px', color: 'var(--accent)' }}>Save ${Math.round(i.cost * 0.65)}/mo (Nightly)</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-2)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    4 Supported Cost Savings Strategies (from stratus-cloud-management)
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    {savingsStrategies.map(strat => (
+                      <div
+                        key={strat.key}
+                        onClick={() => setExpandedStrategy(strat.key)}
+                        style={{
+                          background: expandedStrategy === strat.key ? strat.bg : 'var(--surface-2)',
+                          border: expandedStrategy === strat.key ? `1.5px solid ${strat.color}` : '1px solid var(--border)',
+                          borderRadius: 'var(--radius)',
+                          padding: '14px 16px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '18px' }}>{strat.icon}</span>
+                            <strong style={{ fontSize: '14px', color: 'var(--text)' }}>{strat.label}</strong>
+                          </div>
+                          <span style={{
+                            background: strat.bg,
+                            border: `1px solid ${strat.border}`,
+                            color: strat.color,
+                            fontWeight: 800,
+                            fontSize: '12px',
+                            padding: '2px 8px',
+                            borderRadius: '12px'
+                          }}>
+                            {strat.badge}
+                          </span>
+                        </div>
+
+                        <div style={{ fontSize: '12px', color: 'var(--text-2)', lineHeight: '1.4', marginBottom: '8px' }}>
+                          {strat.desc}
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', paddingTop: '6px', borderTop: '1px solid var(--border)' }}>
+                          <span style={{ color: 'var(--text-3)' }}>Hours saved: {strat.savedHours} hrs/mo</span>
+                          <span style={{ color: strat.color, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+                            −${Math.round(71 * (strat.savedHours / 730))}/mo per t3.large
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -420,7 +492,7 @@ export default function Hero() {
                     onClick={() => setEksSubTab('cost')}
                     style={{ fontSize: '12.5px', padding: '6px 14px' }}
                   >
-                    <DollarSign size={13} /> Node Group Cost Breakdown
+                    <DollarSign size={13} /> Node Cost Savings Strategies
                   </button>
                 </div>
                 <span className="badge badge-aws">EKS Kubernetes</span>
@@ -486,21 +558,40 @@ export default function Hero() {
 
               {eksSubTab === 'cost' && (
                 <div style={{ background: 'var(--surface-2)', padding: '16px', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '8px', color: 'var(--accent)' }}>
-                    💰 Per-Cluster Node Cost Analysis
+                  <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '12px', color: 'var(--accent)' }}>
+                    💰 EKS Node Group Cost Reduction Strategies
                   </div>
-                  {eksClusters.map(c => (
-                    <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--border)' }}>
-                      <div>
-                        <strong>{c.name}</strong>
-                        <div style={{ fontSize: '12px', color: 'var(--text-2)' }}>3× t3.medium EC2 worker nodes</div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                    <div style={{ background: 'var(--surface)', padding: '12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                        <strong>Weekend Shutdown</strong>
+                        <span style={{ color: '#00a0c8', fontWeight: 800 }}>−28%</span>
                       </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ color: 'var(--red)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>${c.cost}/mo</div>
-                        <div style={{ fontSize: '11px', color: 'var(--accent)' }}>Save ${Math.round(c.cost * 0.65)}/mo on Nightly schedule</div>
-                      </div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-2)' }}>Saves −$51/mo per node group (208 hrs/mo)</div>
                     </div>
-                  ))}
+                    <div style={{ background: 'var(--surface)', padding: '12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                        <strong>Nightly Shutdown</strong>
+                        <span style={{ color: '#00b87a', fontWeight: 800 }}>−49%</span>
+                      </div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-2)' }}>Saves −$90/mo per node group (360 hrs/mo)</div>
+                    </div>
+                    <div style={{ background: 'var(--surface)', padding: '12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                        <strong>Nights + Weekends</strong>
+                        <span style={{ color: '#f5c842', fontWeight: 800 }}>−64%</span>
+                      </div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-2)' }}>Saves −$117/mo per node group (468 hrs/mo)</div>
+                    </div>
+                    <div style={{ background: 'var(--surface)', padding: '12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                        <strong>Permanently Scale 0</strong>
+                        <span style={{ color: '#f05555', fontWeight: 800 }}>−100%</span>
+                      </div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-2)' }}>Saves −$183/mo total node cost (730 hrs/mo)</div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -543,31 +634,62 @@ export default function Hero() {
               <div>
                 <div className="control-label" style={{ marginBottom: 8 }}>Schedule Quick Templates:</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {templates.map(t => (
-                    <div
-                      key={t.id}
-                      onClick={() => setSelectedPreset(t.id)}
-                      style={{
-                        background: selectedPreset === t.id ? 'var(--surface-3)' : 'var(--surface-2)',
-                        border: selectedPreset === t.id ? '1px solid var(--accent)' : '1px solid var(--border)',
-                        padding: '10px 14px',
-                        borderRadius: 'var(--radius-sm)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        fontSize: '13px'
-                      }}
-                    >
-                      <div>
-                        <span style={{ fontWeight: 600, color: selectedPreset === t.id ? 'var(--accent)' : 'var(--text)' }}>
-                          {t.label}
-                        </span>
-                        <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>{t.cron}</div>
-                      </div>
-                      {selectedPreset === t.id && <Check size={14} style={{ color: 'var(--accent)' }} />}
+                  <div
+                    style={{
+                      background: 'var(--surface-3)',
+                      border: '1px solid var(--accent)',
+                      padding: '10px 14px',
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      fontSize: '13px'
+                    }}
+                  >
+                    <div>
+                      <span style={{ fontWeight: 600, color: 'var(--accent)' }}>Nightly Shutdown (8 PM – 8 AM)</span>
+                      <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>Stop daily 20:00 · Start daily 08:00 (360 hrs/mo)</div>
                     </div>
-                  ))}
+                    <span className="badge badge-green">−49% Saved</span>
+                  </div>
+
+                  <div
+                    style={{
+                      background: 'var(--surface-2)',
+                      border: '1px solid var(--border)',
+                      padding: '10px 14px',
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      fontSize: '13px'
+                    }}
+                  >
+                    <div>
+                      <span style={{ fontWeight: 600 }}>Weekend Shutdown (Sat – Sun)</span>
+                      <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>Stop Fri 22:00 · Start Mon 08:00 (208 hrs/mo)</div>
+                    </div>
+                    <span className="badge badge-green">−28% Saved</span>
+                  </div>
+
+                  <div
+                    style={{
+                      background: 'var(--surface-2)',
+                      border: '1px solid var(--border)',
+                      padding: '10px 14px',
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      fontSize: '13px'
+                    }}
+                  >
+                    <div>
+                      <span style={{ fontWeight: 600 }}>Nights + Weekends (Business Hours Only)</span>
+                      <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>Stop Mon–Fri 19:00 · Start Mon–Fri 08:00 (468 hrs/mo)</div>
+                    </div>
+                    <span className="badge badge-green">−64% Saved</span>
+                  </div>
                 </div>
               </div>
 
@@ -582,7 +704,7 @@ export default function Hero() {
                 }}>
                   <div style={{ fontSize: '12px', color: 'var(--text-2)', marginBottom: '4px' }}>Paired Job Group</div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13.5px', fontWeight: 700, color: 'var(--accent)' }}>
-                    Stop: 0 22 * * 1-5 · Start: 0 7 * * 1-5
+                    Stop: 0 20 * * * · Start: 0 8 * * *
                   </div>
                 </div>
 
