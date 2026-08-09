@@ -34,7 +34,7 @@ export default function Navbar() {
             style={{ padding: '6px 16px', fontSize: '13px' }}
             onClick={() => setMobileOpen(false)}
           >
-            <span>Contact Us</span>
+            <span>Get Started</span>
             <ArrowRight size={14} />
           </a>
         </nav>
