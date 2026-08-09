@@ -153,17 +153,11 @@ export default function Hero() {
           </p>
 
           <div className="hero-ctas">
-            <a
-              href="https://github.com/techwor/stratus-cloud-management.git"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              <Github size={18} />
-              View on GitHub
+            <a href="#quickstart" className="btn-primary">
+              Get Started <ArrowRight size={18} />
             </a>
             <a href="#capabilities" className="btn-secondary">
-              Platform Capabilities <ArrowRight size={16} />
+              Platform Capabilities
             </a>
           </div>
 

@@ -23,7 +23,6 @@ export default function Footer() {
           <a href="#capabilities">Capabilities</a>
           <a href="#quickstart">Quickstart</a>
           <a href="#contact">Contact Us</a>
-          <a href="https://github.com/techwor/stratus-cloud-management.git" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
 
         <div>MIT License · Self-Hosted Cloud Management</div>

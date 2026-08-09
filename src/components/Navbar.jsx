@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Github } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -30,14 +30,13 @@ export default function Navbar() {
           <a href="#quickstart" onClick={() => setMobileOpen(false)}>Quickstart</a>
           <a href="#contact" onClick={() => setMobileOpen(false)}>Contact Us</a>
           <a
-            href="https://github.com/techwor/stratus-cloud-management.git"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline"
-            style={{ padding: '6px 14px', fontSize: '13px' }}
+            href="#quickstart"
+            className="btn-primary"
+            style={{ padding: '6px 16px', fontSize: '13px' }}
+            onClick={() => setMobileOpen(false)}
           >
-            <Github size={15} />
-            <span>GitHub</span>
+            <span>Get Started</span>
+            <ArrowRight size={14} />
           </a>
         </nav>
 
