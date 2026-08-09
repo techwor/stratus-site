@@ -25,8 +25,8 @@ export default function Navbar() {
         </a>
 
         <nav className={`nav-links ${mobileOpen ? 'open' : ''}`}>
-          <a href="#capabilities" onClick={() => setMobileOpen(false)}>Capabilities</a>
           <a href="#start-stop" onClick={() => setMobileOpen(false)}>Start &amp; Stop</a>
+          <a href="#capabilities" onClick={() => setMobileOpen(false)}>Capabilities</a>
           <a href="#quickstart" onClick={() => setMobileOpen(false)}>Quickstart</a>
           <a href="#contact" onClick={() => setMobileOpen(false)}>Contact Us</a>
           <a
