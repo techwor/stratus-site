@@ -36,7 +36,7 @@ export default function Hero() {
   const totalWaste = resources.filter(r => r.idle && r.state === 'Running').reduce((acc, r) => acc + r.cost, 0);
 
   return (
-    <section className="hero">
+    <section className="hero" id="overview">
       <div className="hero-glow-1"></div>
       <div className="hero-glow-2"></div>
 
