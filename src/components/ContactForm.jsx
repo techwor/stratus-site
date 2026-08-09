@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, Mail, MessageSquare, Clock, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, Mail } from 'lucide-react';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -46,7 +46,6 @@ export default function ContactForm() {
       if (res.ok) {
         setSubmitted(true);
       } else {
-        // Fallback display
         setSubmitted(true);
       }
     } catch (err) {
@@ -72,12 +71,12 @@ export default function ContactForm() {
           <span className="section-label">Contact Us</span>
           <h2 className="section-title">Talk to our cloud experts.</h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>
-            Have questions about Stratus, multi-cloud cost reduction, or self-hosting setup? Reach out and we'll reply within 24 hours.
+            Have questions about Stratus, multi-cloud cost reduction, or self-hosting setup? Reach out directly.
           </p>
         </div>
 
         <div className="contact-grid">
-          {/* Left Form */}
+          {/* Form */}
           <div className="contact-card">
             {!submitted ? (
               <form onSubmit={handleSubmit}>
@@ -173,7 +172,7 @@ export default function ContactForm() {
             )}
           </div>
 
-          {/* Right Info Cards */}
+          {/* Right Direct Support Card */}
           <div>
             <div className="contact-info-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
@@ -181,41 +180,11 @@ export default function ContactForm() {
                 <div className="info-title">Direct Support</div>
               </div>
               <div className="info-sub">Engineers answering engineers</div>
-              <p style={{ fontSize: '13.5px', color: 'var(--text-2)', marginBottom: '10px' }}>
-                Need immediate technical guidance or help setting up multi-cloud policies?
+              <p style={{ fontSize: '13.5px', color: 'var(--text-2)', marginBottom: '14px', lineHeight: '1.5' }}>
+                Need technical guidance or help setting up multi-cloud start/stop policies across your AWS accounts?
               </p>
-              <a href="mailto:mail2pariti@gmail.com" style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '13.5px' }}>
+              <a href="mailto:mail2pariti@gmail.com" style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '14px' }}>
                 mail2pariti@gmail.com →
-              </a>
-            </div>
-
-            <div className="contact-info-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                <Clock size={20} style={{ color: 'var(--cyan)' }} />
-                <div className="info-title">Fast SLA Guarantee</div>
-              </div>
-              <div className="info-sub">&lt; 24 Hour Response</div>
-              <p style={{ fontSize: '13.5px', color: 'var(--text-2)' }}>
-                We review incoming inquiries daily across UTC, EST, and PST timezone windows.
-              </p>
-            </div>
-
-            <div className="contact-info-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                <ShieldCheck size={20} style={{ color: 'var(--accent)' }} />
-                <div className="info-title">Open Source Community</div>
-              </div>
-              <div className="info-sub">GitHub Discussions &amp; Support</div>
-              <p style={{ fontSize: '13.5px', color: 'var(--text-2)', marginBottom: '10px' }}>
-                Join DevOps engineers building automated lifecycle policies.
-              </p>
-              <a
-                href="https://github.com/techwor/stratus-cloud-management.git"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '13.5px' }}
-              >
-                Visit GitHub Repository →
               </a>
             </div>
           </div>
