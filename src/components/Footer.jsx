@@ -1,5 +1,4 @@
 import React from 'react';
-import { Github } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -21,7 +20,7 @@ export default function Footer() {
 
         <div style={{ display: 'flex', gap: '20px' }}>
           <a href="#capabilities">Capabilities</a>
-          <a href="#matrix">Matrix</a>
+          <a href="#start-stop">Start &amp; Stop</a>
           <a href="#quickstart">Quickstart</a>
           <a href="#contact">Contact Us</a>
           <a href="https://github.com/techwor/stratus-cloud-management.git" target="_blank" rel="noopener noreferrer">GitHub</a>

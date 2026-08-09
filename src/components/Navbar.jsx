@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Github, Cloud, Zap } from 'lucide-react';
+import { Menu, X, Github } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function Navbar() {
 
         <nav className={`nav-links ${mobileOpen ? 'open' : ''}`}>
           <a href="#capabilities" onClick={() => setMobileOpen(false)}>Capabilities</a>
-          <a href="#matrix" onClick={() => setMobileOpen(false)}>Matrix</a>
+          <a href="#start-stop" onClick={() => setMobileOpen(false)}>Start &amp; Stop</a>
           <a href="#quickstart" onClick={() => setMobileOpen(false)}>Quickstart</a>
           <a href="#contact" onClick={() => setMobileOpen(false)}>Contact Us</a>
           <a
