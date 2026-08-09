@@ -139,12 +139,12 @@ export default function Hero() {
         {/* Hero Header */}
         <div className="hero-header">
           <h1 className="hero-title">
-            EC2, EKS &amp; RDS Cost Savings Engine.<br />
-            <span className="gradient-text">Weekend, Nightly, Nights+Weekends &amp; Permanent.</span>
+            Automated Cloud Cost Optimization.<br />
+            <span className="gradient-text">Cut idle AWS compute spend automatically.</span>
           </h1>
 
           <p className="hero-sub">
-            Stratus calculates exact downtime savings for <strong>Weekend Shutdown (−28%)</strong>, <strong>Nightly Shutdown (−49%)</strong>, <strong>Nights + Weekends (−64%)</strong>, and <strong>Permanent Stop (−100%)</strong> across all workloads.
+            Stratus gives you instant cost visibility and automated start/stop schedules across EC2, EKS, RDS, and ECS — turning off non-production resources when not in use.
           </p>
 
           <div className="hero-ctas">
