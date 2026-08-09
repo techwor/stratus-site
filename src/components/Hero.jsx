@@ -153,8 +153,8 @@ export default function Hero() {
           </p>
 
           <div className="hero-ctas">
-            <a href="#quickstart" className="btn-primary">
-              Get Started <ArrowRight size={18} />
+            <a href="#contact" className="btn-primary">
+              Contact Us <ArrowRight size={18} />
             </a>
             <a href="#capabilities" className="btn-secondary">
               Platform Capabilities

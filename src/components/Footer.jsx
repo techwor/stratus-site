@@ -21,7 +21,6 @@ export default function Footer() {
         <div style={{ display: 'flex', gap: '20px' }}>
           <a href="#overview">Overview &amp; Control</a>
           <a href="#capabilities">Capabilities</a>
-          <a href="#quickstart">Quickstart</a>
           <a href="#contact">Contact Us</a>
         </div>
 
