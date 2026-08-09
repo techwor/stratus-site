@@ -242,14 +242,18 @@ button, input, select, textarea {
   align-items: center;
   gap: 24px;
 }
-.nav-links a {
+.nav-links a:not(.btn-primary):not(.btn-secondary):not(.btn-outline) {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-2);
   transition: color 0.15s;
 }
-.nav-links a:hover {
+.nav-links a:not(.btn-primary):not(.btn-secondary):not(.btn-outline):hover {
   color: var(--text);
+}
+.nav-links a.btn-primary {
+  color: #05140e;
+  font-weight: 700;
 }
 .nav-mobile-toggle {
   display: none;
