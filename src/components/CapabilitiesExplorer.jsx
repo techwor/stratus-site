@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, DollarSign, ShieldAlert, Layers, CheckCircle2, Play, RefreshCw, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Zap, DollarSign, ShieldAlert, Layers, CheckCircle2, Play, RefreshCw, AlertTriangle, ArrowRight, Rocket, Cpu } from 'lucide-react';
 
 export default function CapabilitiesExplorer() {
   const [activeTab, setActiveTab] = useState('lifecycle');
@@ -19,8 +19,9 @@ export default function CapabilitiesExplorer() {
     { id: 2, type: 'Medium Risk', title: 'Instance bumped from t3.large ($47/mo) to c5.4xlarge ($490/mo)', resolved: false }
   ]);
 
-  // Tab 4: Multi-cloud deploy matrix state
+  // Tab 4: Smart Deployment state
   const [cloudProvider, setCloudProvider] = useState('AWS');
+  const [selectedRepo, setSelectedRepo] = useState('auth-api');
 
   // Calculations for Tab 2
   const savingsByMode = {
@@ -37,6 +38,16 @@ export default function CapabilitiesExplorer() {
 
   const resolveDrift = (id) => {
     setDriftItems(prev => prev.map(item => item.id === id ? { ...item, resolved: true } : item));
+  };
+
+  const getSmartRecommendation = () => {
+    if (selectedRepo === 'auth-api') {
+      return `💡 Smart Recommendation (${cloudProvider}): Deploy to ${cloudProvider === 'AWS' ? 'ECS Fargate' : cloudProvider === 'Azure' ? 'Azure Container Apps' : 'Cloud Run'} for optimal low-idle overhead ($18–35/mo).`;
+    } else if (selectedRepo === 'frontend-app') {
+      return `💡 Smart Recommendation (${cloudProvider}): Deploy to Serverless SSR Container for automatic scale-to-zero ($12–25/mo).`;
+    } else {
+      return `💡 Smart Recommendation (${cloudProvider}): Deploy to Scheduled Worker / Batch Job to minimize runtime idle ($8–20/mo).`;
+    }
   };
 
   return (
@@ -71,10 +82,10 @@ export default function CapabilitiesExplorer() {
             <ShieldAlert size={18} /> Drift &amp; Security Guard
           </button>
           <button
-            className={`cap-tab-btn ${activeTab === 'multicloud' ? 'active' : ''}`}
-            onClick={() => setActiveTab('multicloud')}
+            className={`cap-tab-btn ${activeTab === 'smart-deploy' ? 'active' : ''}`}
+            onClick={() => setActiveTab('smart-deploy')}
           >
-            <Layers size={18} /> Multi-Cloud Inventory
+            <Rocket size={18} /> Smart Deployment
           </button>
         </div>
 
@@ -103,55 +114,49 @@ export default function CapabilitiesExplorer() {
             </div>
 
             <div className="interactive-box">
-              <div className="control-label">Target Infrastructure Resource:</div>
-              <select
-                className="form-select"
-                value={selectedResource}
-                onChange={(e) => { setSelectedResource(e.target.value); setLifecycleStatus('ready'); }}
-              >
-                <option value="eks">dev-cluster-us-east-1 (EKS) — $183/mo waste</option>
-                <option value="rds">db-staging-r5 (RDS) — $280/mo waste</option>
-                <option value="ec2">worker-ec2-dev (EC2) — $47/mo waste</option>
-              </select>
-
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div className="control-label" style={{ marginBottom: 6 }}>Select Target Workload:</div>
+              <div style={{ display: 'flex', gap: '8px', marginBottom: 16 }}>
                 <button
-                  className="btn-primary"
-                  style={{ flex: 1, background: 'var(--red)', color: '#fff' }}
-                  onClick={() => setLifecycleStatus('stopped')}
+                  className={`btn-secondary ${selectedResource === 'eks' ? 'btn-primary' : ''}`}
+                  onClick={() => { setSelectedResource('eks'); setLifecycleStatus('ready'); }}
                 >
-                  ⚡ Scale NodeGroup to 0 &amp; Stop
+                  EKS Cluster (dev-cluster)
                 </button>
                 <button
-                  className="btn-secondary"
-                  style={{ flex: 1 }}
-                  onClick={() => setLifecycleStatus('restored')}
+                  className={`btn-secondary ${selectedResource === 'ec2' ? 'btn-primary' : ''}`}
+                  onClick={() => { setSelectedResource('ec2'); setLifecycleStatus('ready'); }}
                 >
-                  🚀 Restore NodeGroup Size &amp; Start
+                  EC2 Instance (worker-node)
                 </button>
               </div>
 
-              <div className="terminal-body" style={{ minHeight: '140px' }}>
-                {lifecycleStatus === 'ready' && (
-                  <>
-                    <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent plan --resource {selectedResource}</span></div>
-                    <div className="term-row"><span className="term-dim">[Lifecycle] NodeGroup scaling state ready. Click "Scale NodeGroup to 0 &amp; Stop" above.</span></div>
-                  </>
-                )}
-                {lifecycleStatus === 'stopped' && (
-                  <>
-                    <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent stop {selectedResource} --approve</span></div>
-                    <div className="term-row"><span className="term-dim">[Lifecycle] Scaling NodeGroup ng-workloads desiredSize: 3 -&gt; 0...</span></div>
-                    <div className="term-row"><span className="term-green">✓ {selectedResource} stopped! NodeGroup scaled to 0 nodes ($0/mo compute charge).</span></div>
-                  </>
-                )}
-                {lifecycleStatus === 'restored' && (
-                  <>
-                    <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent start {selectedResource}</span></div>
-                    <div className="term-row"><span className="term-dim">[Lifecycle] Scaling NodeGroup ng-workloads desiredSize: 0 -&gt; 3...</span></div>
-                    <div className="term-row"><span className="term-green">✓ {selectedResource} restored with 3 nodes! Endpoint &amp; pods online.</span></div>
-                  </>
-                )}
+              <div style={{ background: 'var(--surface-2)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <span style={{ fontSize: '13px', color: 'var(--text-2)' }}>State Status:</span>
+                  <span className={`badge ${lifecycleStatus === 'stopped' ? 'badge-red' : 'badge-green'}`}>
+                    {lifecycleStatus === 'stopped' ? 'NodeGroup Scaled to 0 ($0/mo)' : 'Active (3 Nodes Running)'}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
+                  {lifecycleStatus === 'ready' ? (
+                    <button
+                      className="btn-primary"
+                      style={{ background: 'var(--red)', color: '#fff', flex: 1, padding: '8px' }}
+                      onClick={() => setLifecycleStatus('stopped')}
+                    >
+                      Scale NodeGroup to 0 (Stop)
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-primary"
+                      style={{ flex: 1, padding: '8px' }}
+                      onClick={() => setLifecycleStatus('ready')}
+                    >
+                      Restore to 3 Nodes (Start)
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -161,91 +166,65 @@ export default function CapabilitiesExplorer() {
         {activeTab === 'finops' && (
           <div className="cap-card">
             <div className="cap-details">
-              <h3>💰 FinOps &amp; Automated Schedules</h3>
+              <h3>💰 FinOps &amp; Scheduled Downtime Engine</h3>
               <p>
-                Development and staging environments don't need to run 24/7. Turn resources off overnight or on weekends to save 65%–76% on cloud bill instantly.
+                Configure paired stop+start cron schedules with quick presets. Save up to 76% on non-production environment costs automatically.
               </p>
 
-              <div className="control-label" style={{ marginBottom: 8 }}>Automated Schedule Policy:</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: 20 }}>
+              <div className="control-label" style={{ marginBottom: 8 }}>Test Schedule Presets:</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 16 }}>
                 <button
                   className={`btn-secondary ${scheduleMode === 'nightly' ? 'btn-primary' : ''}`}
                   onClick={() => setScheduleMode('nightly')}
+                  style={{ justifyContent: 'space-between' }}
                 >
-                  🌙 Nightly (8pm - 8am)
+                  <span>🌙 Nightly Shutdown (8 PM – 8 AM)</span>
+                  <span className="badge badge-green">−49% Saved</span>
                 </button>
                 <button
                   className={`btn-secondary ${scheduleMode === 'weekend' ? 'btn-primary' : ''}`}
                   onClick={() => setScheduleMode('weekend')}
+                  style={{ justifyContent: 'space-between' }}
                 >
-                  📅 Weekend (Fri-Mon)
+                  <span>⏸ Weekend Shutdown (Sat – Sun)</span>
+                  <span className="badge badge-green">−28% Saved</span>
                 </button>
                 <button
                   className={`btn-secondary ${scheduleMode === 'both' ? 'btn-primary' : ''}`}
                   onClick={() => setScheduleMode('both')}
+                  style={{ justifyContent: 'space-between' }}
                 >
-                  💸 Nightly + Weekend
+                  <span>🌙⏸ Nights + Weekends (Business Hours Only)</span>
+                  <span className="badge badge-green">−64% Saved</span>
                 </button>
                 <button
                   className={`btn-secondary ${scheduleMode === 'permanent' ? 'btn-primary' : ''}`}
                   onClick={() => setScheduleMode('permanent')}
+                  style={{ justifyContent: 'space-between' }}
                 >
-                  🗑️ Delete Idle
+                  <span>⏹ Permanently Stop (Complete Decommission)</span>
+                  <span className="badge badge-red">−100% Saved</span>
                 </button>
-              </div>
-
-              <div style={{ background: 'var(--surface-2)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                <div style={{ fontSize: '13px', color: 'var(--text-2)' }}>Estimated Savings Rate</div>
-                <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--accent)' }}>
-                  {currentSavings.amount} <span style={{ fontSize: '14px', color: 'var(--text-2)' }}>({currentSavings.pct} reduction)</span>
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-3)' }}>Annual projected impact: {currentSavings.annual}</div>
               </div>
             </div>
 
             <div className="interactive-box">
-              <div style={{ fontWeight: 700, fontSize: '15px' }}>AWS Savings Plan Purchase Calculator</div>
-              
-              <div className="control-label">
-                <span>Commitment Term:</span>
-                <span style={{ color: 'var(--accent)' }}>{riTerm}-Year ({riTerm === 1 ? '38%' : '62%'} OFF)</span>
-              </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button className={`btn-secondary ${riTerm === 1 ? 'btn-primary' : ''}`} onClick={() => setRiTerm(1)}>1-Year Term</button>
-                <button className={`btn-secondary ${riTerm === 3 ? 'btn-primary' : ''}`} onClick={() => setRiTerm(3)}>3-Year Term</button>
-              </div>
-
-              <div className="control-label" style={{ marginTop: 12 }}>
-                <span>Workload Scale:</span>
-                <span><strong>{riScale} Instances</strong></span>
-              </div>
-              <input
-                type="range"
-                min="4"
-                max="60"
-                step="2"
-                value={riScale}
-                onChange={(e) => setRiScale(Number(e.target.value))}
-                className="slider-range"
-              />
-
-              <div style={{ background: 'rgba(0, 184, 122, 0.08)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(0,184,122,0.2)' }}>
-                <div style={{ fontSize: '12px', color: 'var(--text-2)' }}>Projected Savings Plan Net Discount</div>
-                <div style={{ fontSize: '26px', fontWeight: 800, color: 'var(--accent)' }}>
-                  ${riAnnualSavings.toLocaleString()} <span style={{ fontSize: '14px' }}>/ year</span>
-                </div>
+              <div style={{ textAlign: 'center', padding: '12px', background: 'var(--surface-2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '12px', color: 'var(--text-3)', textTransform: 'uppercase' }}>Projected Monthly Savings</div>
+                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--accent)', margin: '4px 0' }}>{currentSavings.amount}</div>
+                <div style={{ fontSize: '13px', color: 'var(--text-2)' }}>{currentSavings.pct} total idle spend reduction ({currentSavings.annual})</div>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 3: DRIFT GUARD */}
+        {/* TAB 3: DRIFT & SECURITY */}
         {activeTab === 'drift' && (
           <div className="cap-card">
             <div className="cap-details">
-              <h3>🛡️ Automated Infrastructure Drift Guard</h3>
+              <h3>🛡️ Infrastructure Drift &amp; Security Guard</h3>
               <p>
-                Developers manually tweaking security groups or bumping instance sizes creates security vulnerabilities and surprise billing spikes. Stratus runs background scans every 6 hours and alerts you instantly.
+                Continuous scanning detects manual security group changes or unauthorized instance type upgrades across all your AWS organization accounts.
               </p>
               <div className="cap-features-list">
                 <div className="cap-feature-item">
@@ -260,52 +239,80 @@ export default function CapabilitiesExplorer() {
             </div>
 
             <div className="interactive-box">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                 <span style={{ fontWeight: 700, fontSize: '14px' }}>Active Security Alerts</span>
                 <span className="badge badge-red">{driftItems.filter(i => !i.resolved).length} Violations</span>
               </div>
 
-              {driftItems.map(item => (
-                <div key={item.id} style={{
-                  background: item.resolved ? 'rgba(0, 184, 122, 0.05)' : 'rgba(240, 85, 85, 0.08)',
-                  border: item.resolved ? '1px solid rgba(0, 184, 122, 0.3)' : '1px solid rgba(240, 85, 85, 0.3)',
-                  padding: '12px 16px',
-                  borderRadius: 'var(--radius-sm)'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                    <span className={`badge ${item.resolved ? 'badge-green' : 'badge-red'}`}>{item.type}</span>
-                    <span style={{ fontSize: '12px', color: 'var(--text-3)' }}>{item.resolved ? 'Resolved' : 'Unresolved'}</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {driftItems.map(item => (
+                  <div key={item.id} style={{
+                    background: item.resolved ? 'rgba(0, 184, 122, 0.05)' : 'rgba(240, 85, 85, 0.08)',
+                    border: item.resolved ? '1px solid rgba(0, 184, 122, 0.3)' : '1px solid rgba(240, 85, 85, 0.3)',
+                    padding: '12px 16px',
+                    borderRadius: 'var(--radius-sm)'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span className={`badge ${item.resolved ? 'badge-green' : 'badge-red'}`}>{item.type}</span>
+                      <span style={{ fontSize: '12px', color: 'var(--text-3)' }}>{item.resolved ? 'Resolved' : 'Unresolved'}</span>
+                    </div>
+                    <div style={{ fontSize: '13px', marginBottom: 8, fontWeight: 500 }}>{item.title}</div>
+                    {!item.resolved ? (
+                      <button className="btn-outline" style={{ fontSize: '12px', padding: '4px 10px' }} onClick={() => resolveDrift(item.id)}>
+                        1-Click Revert Baseline State
+                      </button>
+                    ) : (
+                      <span style={{ fontSize: '12px', color: 'var(--accent)' }}>✓ Reverted back to IaC security baseline</span>
+                    )}
                   </div>
-                  <div style={{ fontSize: '13px', marginBottom: 8, fontWeight: 500 }}>{item.title}</div>
-                  {!item.resolved ? (
-                    <button className="btn-outline" style={{ fontSize: '12px', padding: '4px 10px' }} onClick={() => resolveDrift(item.id)}>
-                      1-Click Revert Baseline State
-                    </button>
-                  ) : (
-                    <span style={{ fontSize: '12px', color: 'var(--accent)' }}>✓ Reverted back to IaC security baseline</span>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* TAB 4: MULTI-CLOUD INVENTORY */}
-        {activeTab === 'multicloud' && (
+        {/* TAB 4: SMART DEPLOYMENT ENGINE */}
+        {activeTab === 'smart-deploy' && (
           <div className="cap-card">
             <div className="cap-details">
-              <h3>🚀 Unified Multi-Cloud Inventory &amp; Cost Matrix</h3>
+              <h3>🚀 Smart Deployment Engine &amp; Multi-Cloud Matrix</h3>
               <p>
-                Manage AWS EC2, RDS, EKS alongside Azure VMs and GCP instances from a single unified control panel. Compare deployment costs before launching workloads.
+                Repo URL stack detection and pre-deployment cost matrix comparison across AWS, Azure, and GCP. Receive instant architecture recommendations before provisioning.
               </p>
 
-              <div className="control-label" style={{ marginBottom: 8 }}>Filter Cloud Provider:</div>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: 20 }}>
+              <div className="control-label" style={{ marginBottom: 6 }}>Detect Repository Stack:</div>
+              <div style={{ display: 'flex', gap: '8px', marginBottom: 14 }}>
+                <button
+                  className={`btn-secondary ${selectedRepo === 'auth-api' ? 'btn-primary' : ''}`}
+                  onClick={() => setSelectedRepo('auth-api')}
+                  style={{ fontSize: '12.5px', padding: '6px 12px' }}
+                >
+                  auth-api (Node.js API)
+                </button>
+                <button
+                  className={`btn-secondary ${selectedRepo === 'frontend-app' ? 'btn-primary' : ''}`}
+                  onClick={() => setSelectedRepo('frontend-app')}
+                  style={{ fontSize: '12.5px', padding: '6px 12px' }}
+                >
+                  frontend-app (Next.js)
+                </button>
+                <button
+                  className={`btn-secondary ${selectedRepo === 'data-pipeline' ? 'btn-primary' : ''}`}
+                  onClick={() => setSelectedRepo('data-pipeline')}
+                  style={{ fontSize: '12.5px', padding: '6px 12px' }}
+                >
+                  data-pipeline (Python Batch)
+                </button>
+              </div>
+
+              <div className="control-label" style={{ marginBottom: 6 }}>Filter Target Cloud Provider:</div>
+              <div style={{ display: 'flex', gap: '8px', marginBottom: 16 }}>
                 {['AWS', 'Azure', 'GCP'].map(cloud => (
                   <button
                     key={cloud}
                     className={`btn-secondary ${cloudProvider === cloud ? 'btn-primary' : ''}`}
                     onClick={() => setCloudProvider(cloud)}
+                    style={{ fontSize: '12.5px', padding: '6px 12px' }}
                   >
                     {cloud}
                   </button>
@@ -314,20 +321,24 @@ export default function CapabilitiesExplorer() {
             </div>
 
             <div className="interactive-box">
-              <div style={{ fontWeight: 700, fontSize: '14px' }}>Pre-Deployment Cost Matrix ({cloudProvider})</div>
+              <div style={{ background: 'rgba(0, 184, 122, 0.08)', border: '1px solid rgba(0, 184, 122, 0.3)', padding: '12px 16px', borderRadius: 'var(--radius-sm)', marginBottom: '14px', fontSize: '13px', lineHeight: '1.5' }}>
+                {getSmartRecommendation()}
+              </div>
+
+              <div style={{ fontWeight: 700, fontSize: '13.5px', marginBottom: '8px' }}>Pre-Deployment Cost Comparison ({cloudProvider})</div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', background: 'var(--surface-2)', padding: '10px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
                   <div>
-                    <strong style={{ fontSize: '13.5px' }}>Container Task (Fargate / App)</strong>
-                    <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>Auto-scaling serverless container</div>
+                    <strong style={{ fontSize: '13px' }}>Serverless / Container Task</strong>
+                    <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>Auto-scaling serverless container (Zero idle cost)</div>
                   </div>
                   <span style={{ color: 'var(--accent)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>$18–35/mo</span>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', background: 'var(--surface-2)', padding: '10px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
                   <div>
-                    <strong style={{ fontSize: '13.5px' }}>Standard VM Instance</strong>
+                    <strong style={{ fontSize: '13px' }}>Standard Compute VM</strong>
                     <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>Dedicated 2 vCPU / 4GB RAM node</div>
                   </div>
                   <span style={{ color: 'var(--text)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>$30–45/mo</span>
@@ -335,7 +346,7 @@ export default function CapabilitiesExplorer() {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', background: 'var(--surface-2)', padding: '10px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
                   <div>
-                    <strong style={{ fontSize: '13.5px' }}>Managed Kubernetes Cluster</strong>
+                    <strong style={{ fontSize: '13px' }}>Managed Kubernetes Cluster</strong>
                     <div style={{ fontSize: '11px', color: 'var(--text-3)' }}>High availability control plane</div>
                   </div>
                   <span style={{ color: 'var(--text-2)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>$140–180/mo</span>
