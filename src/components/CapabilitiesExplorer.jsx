@@ -21,7 +21,6 @@ export default function CapabilitiesExplorer() {
 
   // Tab 4: Multi-cloud deploy matrix state
   const [cloudProvider, setCloudProvider] = useState('AWS');
-  const [selectedRepo, setSelectedRepo] = useState('auth-api');
 
   // Calculations for Tab 2
   const savingsByMode = {
@@ -57,7 +56,7 @@ export default function CapabilitiesExplorer() {
             className={`cap-tab-btn ${activeTab === 'lifecycle' ? 'active' : ''}`}
             onClick={() => setActiveTab('lifecycle')}
           >
-            <Zap size={18} /> Lifecycle Agent
+            <Zap size={18} /> EC2/EKS Lifecycle Agent
           </button>
           <button
             className={`cap-tab-btn ${activeTab === 'finops' ? 'active' : ''}`}
@@ -83,22 +82,22 @@ export default function CapabilitiesExplorer() {
         {activeTab === 'lifecycle' && (
           <div className="cap-card">
             <div className="cap-details">
-              <h3>⚡ Infrastructure Lifecycle Agent</h3>
+              <h3>⚡ EC2 &amp; EKS Infrastructure Lifecycle Agent</h3>
               <p>
-                Deleting EKS clusters or RDS staging databases saves 100% of idle costs — but recreating them manually takes hours. Stratus serializes full stack state to vault, safely deletes resources, and restores them on demand.
+                Stopping EKS clusters scales all NodeGroups (desired/min/max) down to <strong>0 nodes</strong> (evicting pods safely and eliminating EC2 compute charges). On start, NodeGroups are scaled back up to your pre-configured restore size.
               </p>
               <div className="cap-features-list">
                 <div className="cap-feature-item">
                   <CheckCircle2 size={16} className="cap-check-icon" />
-                  <span>State serialization for K8s CRDs, NodeGroups &amp; VPC references</span>
+                  <span>NodeGroup scaling to 0 on stop &amp; customizable node restore sizing on start</span>
                 </div>
                 <div className="cap-feature-item">
                   <CheckCircle2 size={16} className="cap-check-icon" />
-                  <span>1-Click graceful deletion and automated state restore</span>
+                  <span>State serialization for Kubernetes CRDs, NodeGroups &amp; VPC references</span>
                 </div>
                 <div className="cap-feature-item">
                   <CheckCircle2 size={16} className="cap-check-icon" />
-                  <span>Zero residual cost while resources remain deleted</span>
+                  <span>1-Click EC2/EKS graceful stop and automated state restore</span>
                 </div>
               </div>
             </div>
@@ -121,14 +120,14 @@ export default function CapabilitiesExplorer() {
                   style={{ flex: 1, background: 'var(--red)', color: '#fff' }}
                   onClick={() => setLifecycleStatus('stopped')}
                 >
-                  ⚡ Capture Config &amp; Stop
+                  ⚡ Scale NodeGroup to 0 &amp; Stop
                 </button>
                 <button
                   className="btn-secondary"
                   style={{ flex: 1 }}
                   onClick={() => setLifecycleStatus('restored')}
                 >
-                  🚀 Recreate Resource
+                  🚀 Restore NodeGroup Size &amp; Start
                 </button>
               </div>
 
@@ -136,21 +135,21 @@ export default function CapabilitiesExplorer() {
                 {lifecycleStatus === 'ready' && (
                   <>
                     <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent plan --resource {selectedResource}</span></div>
-                    <div className="term-row"><span className="term-dim">[Lifecycle] State serialized and verified. Click "Capture Config &amp; Stop" above.</span></div>
+                    <div className="term-row"><span className="term-dim">[Lifecycle] NodeGroup scaling state ready. Click "Scale NodeGroup to 0 &amp; Stop" above.</span></div>
                   </>
                 )}
                 {lifecycleStatus === 'stopped' && (
                   <>
                     <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent stop {selectedResource} --approve</span></div>
-                    <div className="term-row"><span className="term-dim">[Lifecycle] Serializing full state to encrypted vault...</span></div>
-                    <div className="term-row"><span className="term-green">✓ {selectedResource} deleted safely! Config cached. 100% idle cost saved.</span></div>
+                    <div className="term-row"><span className="term-dim">[Lifecycle] Scaling NodeGroup ng-workloads desiredSize: 3 -&gt; 0...</span></div>
+                    <div className="term-row"><span className="term-green">✓ {selectedResource} stopped! NodeGroup scaled to 0 nodes ($0/mo compute charge).</span></div>
                   </>
                 )}
                 {lifecycleStatus === 'restored' && (
                   <>
-                    <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent recreate {selectedResource}</span></div>
-                    <div className="term-row"><span className="term-dim">[Lifecycle] Reading state from vault...</span></div>
-                    <div className="term-row"><span className="term-green">✓ {selectedResource} recreated matching exact original config! Endpoint active.</span></div>
+                    <div className="term-row"><span className="term-prompt">$</span><span className="term-cmd">stratus agent start {selectedResource}</span></div>
+                    <div className="term-row"><span className="term-dim">[Lifecycle] Scaling NodeGroup ng-workloads desiredSize: 0 -&gt; 3...</span></div>
+                    <div className="term-row"><span className="term-green">✓ {selectedResource} restored with 3 nodes! Endpoint &amp; pods online.</span></div>
                   </>
                 )}
               </div>

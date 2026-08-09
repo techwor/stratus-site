@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import { Github, ArrowRight, Server, DollarSign, Clock, Play, Square, Check, Layers, Zap } from 'lucide-react';
+import { Github, ArrowRight, Server, DollarSign, Clock, Play, Square, Check, Layers, Zap, AlertTriangle, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
-  const [panelTab, setPanelTab] = useState('active'); // 'active' | 'strategies' | 'cron'
+  const [panelTab, setPanelTab] = useState('active'); // 'active' | 'nodegroups' | 'strategies' | 'cron'
   
   // Tab 1 state: Active Resources
   const [resources, setResources] = useState([
-    { id: 'eks-1', name: 'dev-cluster-us-east-1', type: 'EKS', cost: 183, state: 'Running', idle: true },
+    { id: 'eks-1', name: 'dev-cluster-us-east-1', type: 'EKS', cost: 183, state: 'Running', idle: true, nodegroups: [{ name: 'ng-workloads', current: 3, restore: 3 }] },
     { id: 'rds-1', name: 'db-staging-r5', type: 'RDS', cost: 280, state: 'Running', idle: true },
     { id: 'ec2-1', name: 'worker-ec2-dev', type: 'EC2', cost: 47, state: 'Running', idle: true },
     { id: 'ec2-2', name: 'api-prod-1', type: 'EC2', cost: 24, state: 'Running', idle: false },
   ]);
 
+  // EKS NodeGroup specific state
+  const [ngSize, setNgSize] = useState(3);
+  const [eksState, setEksState] = useState('Running'); // 'Running' | 'Scaling to 0' | 'Stopped'
+
   const [terminalLog, setTerminalLog] = useState([
     { type: 'cmd', text: 'stratus scan --all-accounts' },
     { type: 'dim', text: '[Scanner] 4 active resources discovered across AWS us-east-1' },
-    { type: 'red', text: '⚠ Idle alert: 3 resources detected running with 0 traffic -> $510/mo waste' }
+    { type: 'red', text: '⚠ EKS cluster dev-cluster-us-east-1 running 3 nodes 24/7 -> $183/mo waste' }
   ]);
-
-  // Tab 2 state: Strategies
-  const [selectedStrategy, setSelectedStrategy] = useState('nightly');
-
-  // Tab 3 state: Cron & Presets
-  const [selectedAction, setSelectedAction] = useState('stop-recurring');
-  const [selectedTemplate, setSelectedTemplate] = useState('nightly');
 
   const toggleStopResource = (id) => {
     setResources(prev => prev.map(r => {
@@ -31,17 +28,41 @@ export default function Hero() {
         const newState = r.state === 'Running' ? 'Stopped' : 'Running';
         const costStr = newState === 'Stopped' ? '$0' : `$${r.cost}`;
         
-        setTerminalLog(logs => [
-          ...logs,
-          { type: 'cmd', text: `stratus lifecycle ${newState.toLowerCase()} ${r.name}` },
-          { type: 'green', text: `✓ ${r.name} ${newState.toLowerCase()}! Net monthly cost: ${costStr}/mo` }
-        ]);
+        if (r.type === 'EKS') {
+          if (newState === 'Stopped') {
+            setEksState('Stopped');
+            setTerminalLog(logs => [
+              ...logs,
+              { type: 'cmd', text: `stratus eks stop dev-cluster-us-east-1 --restore-size ${ngSize}` },
+              { type: 'dim', text: '[EKS] Scaling NodeGroup ng-workloads desiredSize: 3 -> 0 (pods evicted)' },
+              { type: 'green', text: '✓ Cluster stopped! NodeGroup scaled to 0. Saved $183/mo (Restore size set to ' + ngSize + ')' }
+            ]);
+          } else {
+            setEksState('Running');
+            setTerminalLog(logs => [
+              ...logs,
+              { type: 'cmd', text: `stratus eks start dev-cluster-us-east-1` },
+              { type: 'dim', text: `[EKS] Scaling NodeGroup ng-workloads desiredSize: 0 -> ${ngSize}` },
+              { type: 'green', text: `✓ Cluster started! Restored ${ngSize} nodes. Endpoint active.` }
+            ]);
+          }
+        } else {
+          setTerminalLog(logs => [
+            ...logs,
+            { type: 'cmd', text: `stratus lifecycle ${newState.toLowerCase()} ${r.name}` },
+            { type: 'green', text: `✓ ${r.name} ${newState.toLowerCase()}! Net cost: ${costStr}/mo` }
+          ]);
+        }
         
         return { ...r, state: newState };
       }
       return r;
     }));
   };
+
+  const [selectedStrategy, setSelectedStrategy] = useState('nightly');
+  const [selectedAction, setSelectedAction] = useState('stop-recurring');
+  const [selectedTemplate, setSelectedTemplate] = useState('nightly');
 
   const totalWaste = resources.filter(r => r.idle && r.state === 'Running').reduce((acc, r) => acc + r.cost, 0);
 
@@ -72,12 +93,12 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-title">
-            Cost visibility &amp; automated lifecycle control.<br />
-            <span className="gradient-text">Built for DevOps engineers.</span>
+            EC2 &amp; EKS Start/Stop Control.<br />
+            <span className="gradient-text">NodeGroup Scaling to 0 &amp; Auto Schedules.</span>
           </h1>
 
           <p className="hero-sub">
-            Stratus gives DevOps teams complete cost visibility and automated schedule policies over AWS, Azure, and GCP infrastructure — stopping idle waste and automating start/stop lifecycles automatically.
+            Stratus scales EKS NodeGroups to 0 on stop and restores desired sizes on start. Combine with automated cron schedules over EC2, EKS, and RDS to eliminate idle cloud waste.
           </p>
 
           <div className="hero-ctas">
@@ -95,6 +116,24 @@ export default function Hero() {
             </a>
           </div>
 
+          {/* Key Feature Highlight Pill */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '12px',
+            background: 'rgba(0, 184, 122, 0.08)',
+            border: '1px solid rgba(0, 184, 122, 0.25)',
+            padding: '10px 20px',
+            borderRadius: 'var(--radius)',
+            marginBottom: '28px',
+            fontSize: '13.5px'
+          }}>
+            <Zap size={18} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+            <span>
+              <strong>EKS NodeGroup Control:</strong> Stopping EKS scales NodeGroups desired/min/max to 0. Starting restores pre-configured NodeGroup sizes automatically.
+            </span>
+          </div>
+
           <div className="hero-stats-row">
             <div className="hero-stat-item">
               <strong>3</strong> Cloud Providers
@@ -110,7 +149,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Master Control Panel Showcase (Merged Overview + Start/Stop Control) */}
+        {/* Master Control Panel Showcase */}
         <div className="control-panel">
           {/* Top Bar */}
           <div className="panel-bar">
@@ -140,6 +179,24 @@ export default function Hero() {
                 <Server size={13} /> Active Monitor &amp; Log
               </button>
               <button
+                onClick={() => setPanelTab('nodegroups')}
+                style={{
+                  background: panelTab === 'nodegroups' ? 'var(--accent)' : 'transparent',
+                  color: panelTab === 'nodegroups' ? '#000' : 'var(--text-2)',
+                  border: 'none',
+                  padding: '4px 12px',
+                  borderRadius: '4px',
+                  fontWeight: 600,
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <Layers size={13} /> EKS NodeGroup Scaling
+              </button>
+              <button
                 onClick={() => setPanelTab('strategies')}
                 style={{
                   background: panelTab === 'strategies' ? 'var(--accent)' : 'transparent',
@@ -155,7 +212,7 @@ export default function Hero() {
                   gap: '6px'
                 }}
               >
-                <DollarSign size={13} /> Optimization Strategies
+                <DollarSign size={13} /> Downtime Strategies
               </button>
               <button
                 onClick={() => setPanelTab('cron')}
@@ -173,7 +230,7 @@ export default function Hero() {
                   gap: '6px'
                 }}
               >
-                <Clock size={13} /> Cron &amp; Schedule Presets
+                <Clock size={13} /> Schedule Engine
               </button>
             </div>
 
@@ -200,7 +257,9 @@ export default function Hero() {
                         <span className="badge badge-aws">{r.type}</span>
                         <div>
                           <div className="resource-name">{r.name}</div>
-                          <div className="resource-sub">us-east-1 · {r.state}</div>
+                          <div className="resource-sub">
+                            us-east-1 · {r.state} {r.type === 'EKS' && `(NodeGroup: ${r.state === 'Stopped' ? '0 nodes' : `${ngSize} nodes`})`}
+                          </div>
                         </div>
                       </div>
 
@@ -227,7 +286,7 @@ export default function Hero() {
                     <Clock size={14} /> Execution Trail Log
                   </span>
                   <span style={{ fontSize: '11px', color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>
-                    ● Live Audit
+                    ● Live Audit Log
                   </span>
                 </div>
 
@@ -250,11 +309,77 @@ export default function Hero() {
             </div>
           )}
 
-          {/* TAB B: Optimization Strategies */}
+          {/* TAB B: EKS NodeGroup Scaling Modal & Controls */}
+          {panelTab === 'nodegroups' && (
+            <div className="panel-side" style={{ padding: '24px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '24px' }}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>EKS NodeGroup Scale-to-0 Control</div>
+                <p style={{ color: 'var(--text-2)', fontSize: '13.5px', marginBottom: '16px' }}>
+                  When stopping an EKS cluster, Stratus scales NodeGroups (desired/min/max) down to <strong>0 nodes</strong> to stop EC2 compute charges completely. When starting, nodes are scaled back up to your target restore size.
+                </p>
+
+                <div style={{ background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 'var(--radius)', padding: '16px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <div>
+                      <strong style={{ fontSize: '14px' }}>dev-cluster-us-east-1</strong>
+                      <div style={{ fontSize: '12px', color: 'var(--text-3)' }}>NodeGroup: <code>ng-workloads</code></div>
+                    </div>
+                    <span className={`badge ${eksState === 'Stopped' ? 'badge-red' : 'badge-green'}`}>
+                      {eksState === 'Stopped' ? 'Scaled to 0 nodes ($0/mo)' : `Active (${ngSize} nodes)`}
+                    </span>
+                  </div>
+
+                  <div className="control-label" style={{ marginBottom: 6 }}>Set Target Restore Size on Start:</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      value={ngSize}
+                      onChange={(e) => setNgSize(Number(e.target.value))}
+                      className="slider-range"
+                      style={{ flex: 1 }}
+                    />
+                    <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--accent)', width: '60px', fontFamily: 'var(--font-mono)' }}>
+                      {ngSize} nodes
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <button
+                      className="btn-primary"
+                      style={{ flex: 1, background: 'var(--red)', color: '#fff' }}
+                      onClick={() => toggleStopResource('eks-1')}
+                    >
+                      Scale NodeGroup to 0 (Stop)
+                    </button>
+                    <button
+                      className="btn-secondary"
+                      style={{ flex: 1 }}
+                      onClick={() => toggleStopResource('eks-1')}
+                    >
+                      Restore to {ngSize} Nodes (Start)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '16px' }}>
+                <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '8px' }}>EKS Lifecycle Logic</div>
+                <ul style={{ fontSize: '13px', color: 'var(--text-2)', paddingLeft: '18px', lineHeight: '1.7' }}>
+                  <li><strong>Stop:</strong> Pods receive termination signals; Auto Scaling Group sizes set to 0.</li>
+                  <li><strong>Zero Compute Cost:</strong> AWS charges $0 for EC2 instances while NodeGroup count is 0.</li>
+                  <li><strong>Start:</strong> ASG scaled back up to target restore size ({ngSize} nodes). Kubernetes re-attaches PVCs and starts pods automatically.</li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* TAB C: Optimization Strategies */}
           {panelTab === 'strategies' && (
             <div className="panel-side" style={{ padding: '24px' }}>
               <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-2)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                4 Supported Downtime Strategies
+                Supported Downtime Strategies &amp; Cost Calculation
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
@@ -293,7 +418,7 @@ export default function Hero() {
             </div>
           )}
 
-          {/* TAB C: Cron & Schedule Presets */}
+          {/* TAB D: Cron & Schedule Engine */}
           {panelTab === 'cron' && (
             <div className="panel-side" style={{ padding: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
               <div>
@@ -355,7 +480,7 @@ export default function Hero() {
                 }}>
                   <div style={{ fontSize: '11px', color: 'var(--text-2)', textTransform: 'uppercase' }}>Configured Cron Expression</div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 600, color: 'var(--accent)' }}>
-                    0 22 * * 1-5 (Stop at 22:00 Mon-Fri)
+                    0 22 * * 1-5 (Stop EC2/EKS at 22:00 Mon-Fri)
                   </div>
                 </div>
 
