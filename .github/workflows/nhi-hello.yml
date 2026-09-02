@@ -12,6 +12,7 @@ permissions:
 jobs:
   hello-nhi:
     runs-on: ubuntu-latest
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
