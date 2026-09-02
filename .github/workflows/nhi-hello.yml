@@ -26,10 +26,11 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "$AUDIENCE" ]; then
-            echo "::error::repo variable NHI_AUDIENCE is not set. Add it under Settings → Secrets and variables → Actions → Variables with the priv-nhi-... audience from the NHI registration."
+            echo "::error::repo variable NHI_AUDIENCE is not set for ${GITHUB_REPOSITORY}. Add it under Settings → Secrets and variables → Actions → Variables tab (not Secrets, not environment scope)."
             exit 1
           fi
           # note: verified against the NHI registered for techwor/stratus-site
+          echo "NHI_AUDIENCE resolved (length: ${#AUDIENCE})"
           TOKEN=$(curl -sS -f \
             -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIENCE}" \
